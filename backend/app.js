@@ -1,40 +1,92 @@
 const express = require("express");
-const createError = require("http-errors");
-const morgan = require("morgan");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mongoose = require("mongoose");
+const cookieSession = require("cookie-session");
 require("dotenv").config();
-const cors = require("cors");
-
-mongoose.connect("mongodb://localhost/sittersynced", (err) => {
-  {
-    err ? console.log(err) : console.log("connected to MongoDB");
-  }
-});
+const User = require("./models/UserModel");
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(morgan("dev"));
+const PORT = process.env.PORT | 8000;
 
-app.get("/", async (req, res, next) => {
-  res.send({ message: "Awesome it works 🐻" });
+mongoose.connect(
+  "mongodb://localhost/sittersynced",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  console.log("connected to MongDB")
+);
+
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: ["helloworld"],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-app.use("/api", require("./routes/api.route"));
-app.use("/user", require("./routes/user"));
-
-app.use((req, res, next) => {
-  next(createError.NotFound());
-});
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    status: err.status || 500,
-    message: err.message,
+passport.deserializeUser((id, done) => {
+  User.findById(id, function (err, user) {
+    done(null, user);
   });
 });
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    (accessToken, refreshToken, profile, done) => {
+      User.findOne({ googleId: profile.id }).then((existingUser) => {
+        if (existingUser) {
+          // we already have a record with the given profile ID
+          done(null, existingUser);
+        } else {
+          // we don't have a user record with this ID, make a new record!
+          new User({
+            googleId: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            image: profile.image,
+          })
+            .save()
+            .then((user) => done(null, user));
+        }
+      });
+    }
+  )
+);
+
+const googleAuth = passport.authenticate("google", {
+  scope: ["profile", "email"],
+});
+
+app.get("/auth/google", googleAuth);
+
+app.get("/auth/google/callback", googleAuth, (req, res) => {
+  res.redirect("http://localhost:3000/user/profile");
+});
+
+app.get("/api/current_user", (req, res) => {
+  console.log(req.user);
+  res.send(req.user);
+});
+
+app.get("/api/logout", (req, res) => {
+  req.logout();
+  res.send(req.user);
+});
+
+module.exports = app.listen(PORT, () => {
+  console.log(`Node.js listening on ${PORT}`);
+});

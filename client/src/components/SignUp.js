@@ -7,7 +7,7 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     console.log("signupform", data);
-    axios.post("http://localhost:8000/user/register", data);
+    axios.post("/user/register", data);
     reset();
   };
 
