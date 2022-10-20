@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
 require("dotenv").config();
 const User = require("./models/UserModel");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT | 8000;
@@ -27,7 +28,13 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // allow session cookie from browser to pass through
+  })
+);
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -57,7 +64,7 @@ passport.use(
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
-            image: profile.image,
+            image: profile.profile_picture,
           })
             .save()
             .then((user) => done(null, user));
@@ -68,7 +75,7 @@ passport.use(
 );
 
 const googleAuth = passport.authenticate("google", {
-  scope: ["profile", "email"],
+  scope: ["profile", "email", "https://www.googleapis.com/auth/calendar"],
 });
 
 app.get("/auth/google", googleAuth);
@@ -83,8 +90,8 @@ app.get("/api/current_user", (req, res) => {
 });
 
 app.get("/api/logout", (req, res) => {
-  req.logout();
-  res.send(req.user);
+  req.logout({ keepSessionInfo: false });
+  res.redirect("http://localhost:3000/");
 });
 
 module.exports = app.listen(PORT, () => {
