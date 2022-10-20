@@ -1,13 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const SignUp = () => {
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit (data) => {
+  const onSubmit = (data) => {
     console.log("signupform", data);
+    axios.post("http://localhost:8000/user/register", data);
     reset();
-  }
+  };
 
   return (
     <>
@@ -59,7 +61,9 @@ const SignUp = () => {
           {...register("password")}
         />
       </div>
-      <button type="submit" onClick={handleSubmit(onSubmit)}/>
+      <button type="submit" onClick={handleSubmit(onSubmit)}>
+        Sign Up
+      </button>
     </>
   );
 };

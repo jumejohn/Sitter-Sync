@@ -1,9 +1,18 @@
 const express = require("express");
 const createError = require("http-errors");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
+
+mongoose.connect("mongodb://localhost/sittersynced", (err) => {
+  {
+    err ? console.log(err) : console.log("connected to MongoDB");
+  }
+});
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
@@ -13,6 +22,7 @@ app.get("/", async (req, res, next) => {
 });
 
 app.use("/api", require("./routes/api.route"));
+app.use("/user", require("./routes/user"));
 
 app.use((req, res, next) => {
   next(createError.NotFound());
