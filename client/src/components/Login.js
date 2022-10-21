@@ -6,15 +6,17 @@ import { handleLogin } from "../actions/login";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   useEffect(() => {
-    const loggedIn = localStorage.loggedIn;
+    const loggedIn = localStorage.userID;
     if (loggedIn) {
-      navigate("/user/profile");
+      navigate("/profile");
     }
   }, []);
   const onSubmit = (data) => {
     dispatch(handleLogin(data));
+    reset();
+    navigate("/profile");
   };
 
   return (

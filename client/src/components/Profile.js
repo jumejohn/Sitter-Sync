@@ -1,27 +1,40 @@
 import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../actions/fetchUser";
+
 const Profile = () => {
   const navigate = useNavigate();
-  const loggedIn = localStorage.loggedIn;
+  const dispatch = useDispatch();
 
+  const loggedIn = localStorage.userID;
+  const token = localStorage.token;
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
     }
-    newUser();
+    dispatch(fetchUser(token));
   }, []);
 
-  const newUser = async () => {
-    await axios
-      .get("/api/current_user", { withCredentials: true })
-      .then(console.log)
-      .then(localStorage.setItem("loggedIn", "true"))
-      .catch(console.error);
-  };
+  const user = useSelector(
+    (state) => state.rootReducer.user.currentUser || null
+  );
+  console.log("user", user);
 
-  return <div>Welcome to your dashboard{} </div>;
+  if (!user) {
+    return (
+      <div className="container">
+        <h1>Loading...</h1>
+      </div>
+    );
+  } else {
+    return (
+      <div className="container">
+        <h1>Welcome to your page {user.firstname}</h1>
+      </div>
+    );
+  }
 };
 
 export default Profile;

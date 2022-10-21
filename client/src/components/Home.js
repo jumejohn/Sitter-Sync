@@ -1,6 +1,13 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const loggedIn = localStorage.userID;
+  const navigate = useNavigate();
+
+  if (loggedIn) {
+    navigate("/profile");
+  }
+
   return (
     <div>
       <h1>Welcome to Sitter-Synced</h1>
