@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../actions/fetchUser";
+import FamilyDisplay from "./FamilyDisplay";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Profile = () => {
     return (
       <div className="container">
         <h1>Welcome to your page {user.firstname}</h1>
+        <FamilyDisplay />
       </div>
     );
   }

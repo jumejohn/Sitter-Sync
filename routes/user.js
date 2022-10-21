@@ -11,18 +11,6 @@ const requireAuth = passport.authenticate("jwt", { session: false });
 
 const User = require("../models/UserModel");
 
-/* GET all users listing. */
-router.get("/", requireAuth, function (req, res, next) {
-  User.find().exec((err, users) => {
-    if (err) {
-      res.status(400).send(err);
-      return next(err);
-    } else {
-      res.status(200).send(users).end();
-    }
-  });
-});
-
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
