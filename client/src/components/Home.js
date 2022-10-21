@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
-  const loggedIn = localStorage.userID;
   const navigate = useNavigate();
 
-  if (loggedIn) {
-    navigate("/profile");
-  }
+  useEffect(() => {
+    const loggedIn = localStorage.userID;
+    if (loggedIn) {
+      navigate("/profile");
+    }
+  });
 
   return (
     <div>
