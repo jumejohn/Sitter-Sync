@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { addChildren } from "../actions/AddChild";
+import ChildrenDisplay from "./ChildrenDisplay";
 
-const FamilyDisplay = () => {
+const FamilyDisplay = (props) => {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const [createFam, setCreateFam] = useState(false);
@@ -11,11 +12,13 @@ const FamilyDisplay = () => {
   const handleCreateToggle = () => setCreateFam(!createFam);
   const onSubmit = (data) => {
     dispatch(addChildren(data));
+    reset();
+    setCreateFam(!createFam);
   };
 
   return (
     <>
-      <h3 className="family-display">Current Family</h3>
+      <h3 className="h3">Current Family</h3>
 
       {createFam ? (
         <>
@@ -48,6 +51,7 @@ const FamilyDisplay = () => {
       ) : (
         <button onClick={handleCreateToggle}>Add New Child</button>
       )}
+      <ChildrenDisplay user={props.user} />
     </>
   );
 };

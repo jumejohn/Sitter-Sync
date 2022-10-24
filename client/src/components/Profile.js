@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../actions/fetchUser";
 import FamilyDisplay from "./FamilyDisplay";
+import EventsDisplay from "./EventsDisplay";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -32,8 +33,18 @@ const Profile = () => {
   } else {
     return (
       <div className="container">
-        <h1>Welcome to your page {user.firstname}</h1>
-        <FamilyDisplay />
+        <div className="h1">
+          <h1>Welcome to your page {user.firstname}</h1>
+        </div>
+        <div className="row">
+          <div className="col-4 ">
+            <FamilyDisplay user={user} />
+          </div>
+          <div className="col-4 ">
+            <h3 className="h3">Your Upcoming Events</h3>
+            <EventsDisplay user={user} />
+          </div>
+        </div>
       </div>
     );
   }

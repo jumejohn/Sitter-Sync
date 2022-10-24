@@ -86,7 +86,7 @@ router.put("/:userId/addchild", requireAuth, async function (req, res, next) {
     const updatedUser = await User.find(filter);
     console.log(updatedUser, "Here");
     console.log("this", updatedUser.children);
-    User.updateOne({ children: child }, (err) => {
+    User.updateOne({ $push: { children: child } }, (err) => {
       if (err) return next(err);
       res.status(204).json(updatedUser);
       res.end();

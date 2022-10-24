@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
   description: { type: String, required: true },
-  user: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  owner: { type: Schema.Types.ObjectId, ref: "User" },
+  confirmedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  invitedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.model("Event", EventSchema);
