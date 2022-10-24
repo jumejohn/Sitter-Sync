@@ -11,6 +11,13 @@ const validateNewUser = (req) => {
     return false;
   }
 };
+const validateNewFamily = (req) => {
+  if (req.body.name && req.body.parent) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 const validateUpdateUser = (req) => {
   if (

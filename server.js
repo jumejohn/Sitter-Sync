@@ -8,7 +8,6 @@ const cookieSession = require("cookie-session");
 const session = require("express-session");
 const mainRoutes = require("./routes/main");
 const userRoutes = require("./routes/user");
-const familyRoutes = require("./routes/family");
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -35,7 +34,6 @@ app.use(bodyParser.json());
 
 app.use("/", mainRoutes);
 app.use("/user", userRoutes);
-app.use("/family", familyRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
