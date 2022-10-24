@@ -14,16 +14,14 @@ const User = require("../models/UserModel");
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
-  User.findById(id)
-    .populate("family")
-    .exec((err, user) => {
-      if (err) {
-        res.status(400).send(err);
-        return next(err);
-      } else {
-        res.status(200).send(user).end();
-      }
-    });
+  User.findById(id).exec((err, user) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      res.status(200).send(user).end();
+    }
+  });
 });
 
 /* POST add new user */
@@ -79,49 +77,22 @@ router.delete("/:userId", requireAuth, function (req, res, next) {
 });
 
 // Edit user by id
-router.put("/:userId", requireAuth, async function (req, res, next) {
+router.put("/:userId/addchild", requireAuth, async function (req, res, next) {
   if (validateUpdateUser(req)) {
     const userId = req.params.userId;
-    const {
-      username,
-      firstname,
-      lastname,
-      email,
-      avatarUrl,
-      children,
-      family,
-      password,
-    } = req.body;
-    const update = {
-      username: username,
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      avatarUrl: avatarUrl,
-      children: children,
-      family: family,
-      password: password,
-    };
+    const child = req.body;
+    console.log(child);
     const filter = { _id: userId };
-    const updateUser = await User.findOneAndUpdate(
-      filter,
-      update,
-      { new: true },
-      function (err, response) {
-        if (err) {
-          res.status(400).send(err);
-        } else {
-          res.send(response);
-          res.status(200);
-        }
-      }
-    );
+    const updatedUser = await User.find(filter);
+    console.log(updatedUser, "Here");
+    console.log("this", updatedUser.children);
+    User.updateOne({ children: child }, (err) => {
+      if (err) return next(err);
+      res.status(204).json(updatedUser);
+      res.end();
+    });
   } else {
-    res
-      .status(401)
-      .send(
-        "username, firstname, lastname, email and password are required fields and cannot be empty"
-      );
+    res.status(401).send("Failed to add child to user");
   }
 });
 

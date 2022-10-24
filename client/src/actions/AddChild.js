@@ -3,11 +3,11 @@ import axios from "axios";
 export const addChildren = (childData) => (dispatch) => {
   const userID = localStorage.userID;
   const token = localStorage.token;
-  const url = `/user/${userID}`;
-  const data = { name: childData.name, age: childData.age };
-
+  const url = `/user/${userID}/addchild`;
+  const data = childData;
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
   axios
-    .put(url, data)
+    .put(url, data, headers)
     .then(function (response) {
       console.log("AddChildren action", response.data);
     })
