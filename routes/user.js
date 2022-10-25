@@ -10,6 +10,7 @@ const passportService = require("../authentication/passport");
 const requireAuth = passport.authenticate("jwt", { session: false });
 
 const User = require("../models/UserModel");
+const Event = require("../models/EventModel");
 
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
@@ -83,17 +84,56 @@ router.put("/:userId/addchild", requireAuth, async function (req, res, next) {
     const child = req.body;
     console.log(child);
     const filter = { _id: userId };
-    const updatedUser = await User.find(filter);
-    console.log(updatedUser, "Here");
-    console.log("this", updatedUser.children);
-    User.updateOne({ $push: { children: child } }, (err) => {
-      if (err) return next(err);
-      res.status(204).json(updatedUser);
-      res.end();
+    const updatedUser = await User.updateOne(filter, {
+      $push: { children: child },
     });
+    res.status(204).json(updatedUser);
+    res.end();
+    console.log(updatedUser, "Here");
   } else {
     res.status(401).send("Failed to add child to user");
   }
+});
+
+router.post("/:userId/event", requireAuth, async function (req, res, next) {
+  const userId = req.params.userId;
+  const filter = { _id: userId };
+  const {
+    description,
+    startDate,
+    endDate,
+    children,
+    confirmedUsers,
+    invitedUsers,
+  } = req.body;
+  const newEvent = new Event({
+    description,
+    startDate,
+    endDate,
+    owner: userId,
+    children,
+    confirmedUsers,
+    invitedUsers,
+  }).save(async (err, event) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      console.log(event);
+      const updatedUser = await User.updateOne(filter, {
+        $push: { events: event._id },
+      }).populate("events", async (err, event) => {
+        if (err) {
+          res.status(400).send(err);
+          return next(err);
+        } else {
+          res.status(204).json(updatedUser);
+          res.end();
+          console.log(updatedUser, "Here");
+        }
+      });
+    }
+  });
 });
 
 module.exports = router;

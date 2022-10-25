@@ -15,11 +15,11 @@ const ChildSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
+  username: { type: String, required: false, unique: true },
+  firstname: String,
+  lastname: String,
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  password: String,
   children: [ChildSchema],
   events: [{ type: Schema.Types.ObjectId, ref: "Event" }],
 });
