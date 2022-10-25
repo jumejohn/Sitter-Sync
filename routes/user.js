@@ -15,14 +15,16 @@ const Event = require("../models/EventModel");
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
-  User.findById(id).exec((err, user) => {
-    if (err) {
-      res.status(400).send(err);
-      return next(err);
-    } else {
-      res.status(200).send(user).end();
-    }
-  });
+  User.findById(id)
+    .populate("events")
+    .exec((err, user) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        res.status(200).send(user).end();
+      }
+    });
 });
 
 /* POST add new user */
@@ -106,6 +108,7 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
     confirmedUsers,
     invitedUsers,
   } = req.body;
+
   const newEvent = new Event({
     description,
     startDate,

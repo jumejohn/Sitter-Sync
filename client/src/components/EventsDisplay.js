@@ -77,8 +77,16 @@ const EventsDisplay = (props) => {
           </form>
         )}
       </div>
-      <ConfirmedEvents events={props.user.events} />
-      <PendingEvents events={props.user.events} />
+      <>
+        {props.user.events ? (
+          <>
+            {/* <ConfirmedEvents events={props.user} /> */}
+            <PendingEvents user={props.user} />
+          </>
+        ) : (
+          <h4>No Events Scheduled Yet</h4>
+        )}
+      </>
     </div>
   );
 };
