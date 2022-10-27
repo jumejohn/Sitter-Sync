@@ -11,12 +11,14 @@ const requireAuth = passport.authenticate("jwt", { session: false });
 
 const User = require("../models/UserModel");
 const Event = require("../models/EventModel");
+const Child = require("../models/ChildModel");
 
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
   User.findById(id)
     .populate("events")
+    .populate("children")
     .exec((err, user) => {
       if (err) {
         res.status(400).send(err);
@@ -80,21 +82,34 @@ router.delete("/:userId", requireAuth, function (req, res, next) {
 });
 
 // Edit user by id
-router.put("/:userId/addchild", requireAuth, async function (req, res, next) {
-  if (validateUpdateUser(req)) {
-    const userId = req.params.userId;
-    const child = req.body;
-    console.log(child);
-    const filter = { _id: userId };
-    const updatedUser = await User.updateOne(filter, {
-      $push: { children: child },
-    });
-    res.status(204).json(updatedUser);
-    res.end();
-    console.log(updatedUser, "Here");
-  } else {
-    res.status(401).send("Failed to add child to user");
-  }
+router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
+  const userId = req.params.userId;
+  const filter = { _id: userId };
+  const { name, age, childFacts } = req.body;
+
+  const newChild = new Child({
+    name,
+    age,
+    childFacts,
+  }).save(async (err, child) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      console.log(child);
+      const updatedUser = await User.updateOne(filter, {
+        $push: { children: child._id },
+      }).populate("children", async (err, child) => {
+        if (err) {
+          res.status(400).send(err);
+          return next(err);
+        } else {
+          res.status(204).json(updatedUser);
+          res.end();
+        }
+      });
+    }
+  });
 });
 
 router.post("/:userId/event", requireAuth, async function (req, res, next) {
@@ -132,7 +147,6 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
         } else {
           res.status(204).json(updatedUser);
           res.end();
-          console.log(updatedUser, "Here");
         }
       });
     }

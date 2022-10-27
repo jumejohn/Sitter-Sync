@@ -6,7 +6,7 @@ const EventSchema = new Schema({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   owner: { type: Schema.Types.ObjectId, ref: "User" },
-  children: [Object],
+  children: [{ type: Schema.Types.ObjectId, ref: "Child" }],
   confirmedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   invitedUsers: [{ type: String, required: true }],
 });

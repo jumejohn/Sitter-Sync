@@ -45,8 +45,20 @@ const FamilyDisplay = (props) => {
               placeholder=" Age"
               {...register("age")}
             />
-            <button onClick={handleSubmit(onSubmit)}>Submit</button>
           </div>
+          <div className="mb-3">
+            <label htmlFor="childFacts" className="form-label">
+              Special Notes
+            </label>
+            <textarea
+              type="text"
+              className="form-control"
+              id="childFacts"
+              placeholder="Special Notes"
+              {...register("childFacts")}
+            />
+          </div>
+          <button onClick={handleSubmit(onSubmit)}>Submit</button>
         </>
       ) : (
         <button onClick={handleCreateToggle}>Add New Child</button>
