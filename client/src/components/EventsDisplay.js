@@ -13,22 +13,25 @@ const EventsDisplay = (props) => {
   const handleCreateToggle = () => setCreateEvent(!createEvent);
 
   const onSubmit = (data) => {
-    dispatch(addEvent(data));
-    console.log(data, "this is what I am looking for");
+    dispatch(addEvent(data, selectedList));
+    console.log(data, selectedList, "this is what I am looking for");
     reset();
     setCreateEvent(!createEvent);
   };
 
-  // const [selectedList, setSelectedList] = useState([]);
+  const [selectedList, setSelectedList] = useState([]);
 
-  // const handleChange = (e) => {
-  //   let { options } = e.target;
-  //   options = Array.apply(null, options);
-  //   const selectedValues = options
-  //     .filter((x) => x.selected)
-  //     .map((x) => x.value);
-  //   setSelectedList(selectedValues);
-  // };
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      setSelectedList([...selectedList, e.target.value]);
+      console.log("checkbox", e.target.value);
+      console.log(selectedList, "this");
+    }
+    if (!e.target.checked) {
+      setSelectedList(selectedList.filter((x) => x !== e.target.value));
+      console.log(selectedList, "that");
+    }
+  };
 
   return (
     <div>
@@ -75,17 +78,27 @@ const EventsDisplay = (props) => {
                   {...register("endDate")}
                 />
               </div>
-              {/* <div>
-                <select name="list-box" multi="true" onChange={handleChange}>
-                  {props.user.children.map((child) => {
-                    return (
-                      <option value={child.id} key={child.id}>
+              <div>
+                {props.user.children.map((child) => {
+                  return (
+                    <div className="form-check" key={child._id}>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={child._id}
+                        id="flexCheckDefault"
+                        onChange={handleChange}
+                      />
+                      <label
+                        className="form-check-label"
+                        htmlFor="flexCheckDefault"
+                      >
                         {child.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div> */}
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
 
               <div className="mb-3">
                 <label htmlFor="invitedUsers" className="form-label">
