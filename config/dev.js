@@ -1,4 +1,4 @@
 module.exports = {
-  MONGODB_URI: "mongodb://localhost/sittersynced",
-  TOKEN_SECRET: "helloworld",
+  MONGODB_URI: 
+  TOKEN_SECRET: 
 };
