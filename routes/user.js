@@ -100,7 +100,6 @@ router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
       res.status(400).send(err);
       return next(err);
     } else {
-      console.log(child);
       const updatedUser = await User.updateOne(filter, {
         $push: { children: child._id },
       }).populate("children", async (err, child) => {
@@ -142,7 +141,6 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
       res.status(400).send(err);
       return next(err);
     } else {
-      console.log("Thisevent", event);
       const updatedUser = await User.updateOne(filter, {
         $push: { events: event._id },
       }).exec((err, event) => {
@@ -150,8 +148,6 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
           res.status(400).send(err);
           return next(err);
         } else {
-          console.log("markedEvent", event);
-          console.log("user", updatedUser);
           res.status(204).json(event);
           res.end();
         }
@@ -160,20 +156,16 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
   });
 });
 
-router.get("/event/:eventId", requireAuth, async function (req, res, next) {
+router.delete("/event/:eventId", requireAuth, async function (req, res, next) {
   const eventId = req.params.eventId;
-  console.log("eventID", eventId);
-  Event.findById(eventId)
-    .populate("children")
-    .exec((err, event) => {
-      if (err) {
-        res.status(400).send(err);
-        return next(err);
-      } else {
-        // Event.updateOne({ $populate: { path: "children" } });
-        return res.status(200).json(event);
-      }
-    });
+  Event.findByIdAndDelete(eventId).exec((err, event) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      return res.status(200).json(event);
+    }
+  });
 });
 
 module.exports = router;

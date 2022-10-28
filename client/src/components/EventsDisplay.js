@@ -13,7 +13,10 @@ const EventsDisplay = (props) => {
   const handleCreateToggle = () => setCreateEvent(!createEvent);
 
   const onSubmit = (data) => {
+    console.log(data);
+
     dispatch(addEvent(data, selectedList));
+
     reset();
     setCreateEvent(!createEvent);
     setSelectedList("");
@@ -36,97 +39,99 @@ const EventsDisplay = (props) => {
         {!createEvent ? (
           <button onClick={handleCreateToggle}>Add New Event</button>
         ) : (
-          <form>
-            <div>
-              {/* description: { type: String, required: true },
+          <div>
+            <form>
+              <div>
+                {/* description: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true }, */}
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">
-                  Description
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  placeholder=" Event Title"
-                  {...register("Title")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="description" className="form-label">
-                  Description
-                </label>
-                <textarea
-                  type="text area"
-                  className="form-control"
-                  id="description"
-                  placeholder=" Event Description"
-                  {...register("description")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="startDate" className="form-label">
-                  Start Date
-                </label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id=""
-                  {...register("startDate")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="endDate" className="form-label">
-                  End Date
-                </label>
-                <input
-                  type="datetime-local"
-                  className="form-control"
-                  id=""
-                  {...register("endDate")}
-                />
-              </div>
-              <div>
-                {props.user.children.map((child) => {
-                  return (
-                    <div className="form-check" key={child._id}>
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={child._id}
-                        id="flexCheckDefault"
-                        onChange={handleChange}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="flexCheckDefault"
-                      >
-                        {child.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
+                <div className="mb-3">
+                  <label htmlFor="title" className="form-label">
+                    Description
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="title"
+                    placeholder=" Event Title"
+                    {...register("Title")}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="description" className="form-label">
+                    Description
+                  </label>
+                  <textarea
+                    type="text area"
+                    className="form-control"
+                    id="description"
+                    placeholder=" Event Description"
+                    {...register("description")}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="startDate" className="form-label">
+                    Start Date
+                  </label>
+                  <input
+                    type="datetime-local"
+                    className="form-control"
+                    id=""
+                    {...register("startDate")}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="endDate" className="form-label">
+                    End Date
+                  </label>
+                  <input
+                    type="datetime-local"
+                    className="form-control"
+                    id=""
+                    {...register("endDate")}
+                  />
+                </div>
+                <div>
+                  {props.user.children.map((child) => {
+                    return (
+                      <div className="form-check" key={child._id}>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value={child._id}
+                          id="flexCheckDefault"
+                          onChange={handleChange}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor="flexCheckDefault"
+                        >
+                          {child.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
 
-              <div className="mb-3">
-                <label htmlFor="invitedUsers" className="form-label">
-                  Invite Sitter Email Address
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="invitedUsers"
-                  placeholder="Invite Sitter Email Address"
-                  {...register("invitedUsers")}
-                />
+                <div className="mb-3">
+                  <label htmlFor="invitedUsers" className="form-label">
+                    Invite Sitter Email Address
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="invitedUsers"
+                    placeholder="Invite Sitter Email Address"
+                    {...register("invitedUsers")}
+                  />
+                </div>
+                <div>
+                  <button onClick={handleSubmit(onSubmit)}>Submit</button>
+                </div>
               </div>
-              <div>
-                <button onClick={handleSubmit(onSubmit)}>Submit</button>
-                <button onClick={handleCreateToggle}>Cancel</button>
-              </div>
-            </div>
-          </form>
+            </form>
+            <button onClick={handleCreateToggle}>Cancel</button>
+          </div>
         )}
       </div>
       <>

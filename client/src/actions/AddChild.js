@@ -8,9 +8,7 @@ export const addChildren = (childData) => (dispatch) => {
   const headers = { headers: { Authorization: `Bearer ${token}` } };
   axios
     .post(url, data, headers)
-    .then(function (response) {
-      console.log("AddChildren action", response.data);
-    })
+    .then(function (response) {})
     .catch(function (error) {
       console.log(error);
       alert(error);

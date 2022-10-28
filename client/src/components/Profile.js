@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../actions/fetchUser";
 import FamilyDisplay from "./FamilyDisplay";
@@ -12,12 +11,11 @@ const Profile = () => {
   const token = localStorage.token;
   useEffect(() => {
     dispatch(fetchUser(token));
-  }, []);
+  }, [dispatch, token]);
 
   const user = useSelector(
     (state) => state.rootReducer.user.currentUser || null
   );
-  console.log("user", user);
 
   if (!user) {
     return (

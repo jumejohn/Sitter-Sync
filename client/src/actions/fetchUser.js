@@ -7,7 +7,6 @@ export const fetchUser = (token) => async (dispatch) => {
   axios
     .get(url, { headers: { Authorization: `Bearer ${token}` } })
     .then(function (response) {
-      console.log("fetchuseraction", response.data);
       dispatch({
         type: FETCH_USER,
         payload: response.data,
@@ -15,7 +14,7 @@ export const fetchUser = (token) => async (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
-      localStorage.clear();
-      window.location.href = "/login";
+      // localStorage.clear();
+      // window.location.href = "/login";
     });
 };

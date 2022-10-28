@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./styles.css";
@@ -33,7 +33,9 @@ const Nav = () => {
         {!loggedIn ? (
           <Link to="/login">Login</Link>
         ) : (
-          <button onClick={onLogout}>Logout</button>
+          <>
+            <button onClick={onLogout}>Logout</button>
+          </>
         )}
       </div>
     </nav>
