@@ -16,7 +16,8 @@ export const addEvent = (eventData, children) => (dispatch) => {
   axios
     .post(url, data, headers)
     .then(function (response) {
-      console.log("AddEvent action", response.data);
+      console.log("AddEvent action", response);
+      console.log(children, "thisis what comes into the action");
     })
     .catch(function (error) {
       console.log(error);

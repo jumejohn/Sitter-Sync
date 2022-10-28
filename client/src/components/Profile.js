@@ -7,15 +7,10 @@ import FamilyDisplay from "./FamilyDisplay";
 import EventsDisplay from "./EventsDisplay";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const loggedIn = localStorage.userID;
   const token = localStorage.token;
   useEffect(() => {
-    if (!loggedIn) {
-      navigate("/login");
-    }
     dispatch(fetchUser(token));
   }, []);
 

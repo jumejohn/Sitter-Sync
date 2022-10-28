@@ -14,9 +14,9 @@ const EventsDisplay = (props) => {
 
   const onSubmit = (data) => {
     dispatch(addEvent(data, selectedList));
-    console.log(data, selectedList, "this is what I am looking for");
     reset();
     setCreateEvent(!createEvent);
+    setSelectedList("");
   };
 
   const [selectedList, setSelectedList] = useState([]);
@@ -24,12 +24,9 @@ const EventsDisplay = (props) => {
   const handleChange = (e) => {
     if (e.target.checked) {
       setSelectedList([...selectedList, e.target.value]);
-      console.log("checkbox", e.target.value);
-      console.log(selectedList, "this");
     }
     if (!e.target.checked) {
       setSelectedList(selectedList.filter((x) => x !== e.target.value));
-      console.log(selectedList, "that");
     }
   };
 
@@ -44,6 +41,18 @@ const EventsDisplay = (props) => {
               {/* description: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true }, */}
+              <div className="mb-3">
+                <label htmlFor="title" className="form-label">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="title"
+                  placeholder=" Event Title"
+                  {...register("Title")}
+                />
+              </div>
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">
                   Description
@@ -104,7 +113,7 @@ const EventsDisplay = (props) => {
                 <label htmlFor="invitedUsers" className="form-label">
                   Invite Sitter Email Address
                 </label>
-                <textarea
+                <input
                   type="email"
                   className="form-control"
                   id="invitedUsers"
@@ -114,6 +123,7 @@ const EventsDisplay = (props) => {
               </div>
               <div>
                 <button onClick={handleSubmit(onSubmit)}>Submit</button>
+                <button onClick={handleCreateToggle}>Cancel</button>
               </div>
             </div>
           </form>

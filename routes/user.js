@@ -12,12 +12,16 @@ const requireAuth = passport.authenticate("jwt", { session: false });
 const User = require("../models/UserModel");
 const Event = require("../models/EventModel");
 const Child = require("../models/ChildModel");
+const { populate } = require("../models/UserModel");
 
 /* GET user by id */
 router.get("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
   User.findById(id)
-    .populate("events")
+    .populate({
+      path: "events",
+      populate: { path: "children", model: "Child" },
+    })
     .populate("children")
     .exec((err, user) => {
       if (err) {
@@ -115,6 +119,7 @@ router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
 router.post("/:userId/event", requireAuth, async function (req, res, next) {
   const userId = req.params.userId;
   const filter = { _id: userId };
+  console.log("body", req.body);
   const {
     description,
     startDate,
@@ -124,12 +129,12 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
     invitedUsers,
   } = req.body;
 
-  const newEvent = new Event({
+  new Event({
     description,
     startDate,
     endDate,
-    owner: userId,
     children,
+    owner: userId,
     confirmedUsers,
     invitedUsers,
   }).save(async (err, event) => {
@@ -137,20 +142,38 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
       res.status(400).send(err);
       return next(err);
     } else {
-      console.log(event);
+      console.log("Thisevent", event);
       const updatedUser = await User.updateOne(filter, {
         $push: { events: event._id },
-      }).populate("events", async (err, event) => {
+      }).exec((err, event) => {
         if (err) {
           res.status(400).send(err);
           return next(err);
         } else {
-          res.status(204).json(updatedUser);
+          console.log("markedEvent", event);
+          console.log("user", updatedUser);
+          res.status(204).json(event);
           res.end();
         }
       });
     }
   });
+});
+
+router.get("/event/:eventId", requireAuth, async function (req, res, next) {
+  const eventId = req.params.eventId;
+  console.log("eventID", eventId);
+  Event.findById(eventId)
+    .populate("children")
+    .exec((err, event) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        // Event.updateOne({ $populate: { path: "children" } });
+        return res.status(200).json(event);
+      }
+    });
 });
 
 module.exports = router;
