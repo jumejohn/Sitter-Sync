@@ -28,9 +28,7 @@ exports.currentUser = function (req, res) {
     firstname: req.user.firstname,
     lastname: req.user.lastname,
     email: req.user.email,
-    avatarUrl: req.user.avatarUrl,
     children: req.user.children,
-    family: req.user.family,
     events: req.user.events,
     token: tokenForUser(req.user),
   };
