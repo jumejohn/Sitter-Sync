@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Modal from "react-modal";
+import { deleteEvent } from "../actions/deleteEvent";
+import { useDispatch } from "react-redux";
 
 Modal.setAppElement("#root");
 
 const EventInfo = (props) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const event = props.event;
 
-  function toggleModal() {
+  const toggleModal = () => {
     setOpen(!open);
-  }
+  };
+  const deleteAnEvent = () => {
+    dispatch(deleteEvent);
+  };
+  const handleDelete = () => {};
 
   return (
     <>
@@ -22,7 +29,6 @@ const EventInfo = (props) => {
         contentLabel={event.title}
       >
         <div>
-          <button onClick={toggleModal}>X</button>
           <h2>{event.title}</h2>
           <p>
             {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
@@ -38,6 +44,10 @@ const EventInfo = (props) => {
               </div>
             ))}
           </div>
+        </div>
+        <button onClick={toggleModal}>CLOSE</button>
+        <div>
+          <button onClick={handleDelete}> Delete Event?</button>
         </div>
       </Modal>
     </>

@@ -115,6 +115,26 @@ router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
   });
 });
 
+router.put("/editchild/:childId", requireAuth, async function (req, res, next) {
+  const childId = req.params.childId;
+  const { name, age, childFacts } = req.body;
+  console.log(childId);
+  console.log(res.body);
+  Child.findOneAndUpdate(
+    { _id: childId },
+    { name, age, childFacts },
+    async (err, child) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        res.status(204).json(child);
+        res.end();
+      }
+    }
+  );
+});
+
 router.post("/:userId/event", requireAuth, async function (req, res, next) {
   const userId = req.params.userId;
   const filter = { _id: userId };
