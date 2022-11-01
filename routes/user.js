@@ -140,6 +140,7 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
   const filter = { _id: userId };
   console.log("body", req.body);
   const {
+    title,
     description,
     startDate,
     endDate,
@@ -149,6 +150,7 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
   } = req.body;
 
   new Event({
+    title,
     description,
     startDate,
     endDate,

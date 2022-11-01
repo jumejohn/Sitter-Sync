@@ -14,11 +14,11 @@ const Nav = () => {
   };
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar top-nav">
       <div className="container">
         <div className="row">
-          <div className="container">
-            <div className="navbar-brand">
+          <div>
+            <div className="navbar">
               <Link className="link" to="/">
                 Home
               </Link>

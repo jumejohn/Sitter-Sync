@@ -15,9 +15,8 @@ const EventInfo = (props) => {
     setOpen(!open);
   };
   const deleteAnEvent = () => {
-    dispatch(deleteEvent);
+    dispatch(deleteEvent(event._id));
   };
-  const handleDelete = () => {};
 
   return (
     <>
@@ -44,10 +43,11 @@ const EventInfo = (props) => {
               </div>
             ))}
           </div>
+          <div>{!event.confirmedUsers ? "Confirmed" : null}</div>
         </div>
         <button onClick={toggleModal}>CLOSE</button>
         <div>
-          <button onClick={handleDelete}> Delete Event?</button>
+          <button onClick={deleteAnEvent}> Delete Event?</button>
         </div>
       </Modal>
     </>

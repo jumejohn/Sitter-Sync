@@ -1,29 +1,74 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import ConfirmedEvents from "./ConfirmedEvents";
+import ApiCalendar from "react-google-calendar-api";
 import PendingEvents from "./PendingEvents";
 import { addEvent } from "../actions/AddEvent";
+
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+
+const config = {
+  clientId: CLIENT_ID,
+  apiKey: API_KEY,
+  scope: "https://www.googleapis.com/auth/calendar",
+  discoveryDocs: [
+    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  ],
+};
+
+const apiCalendar = new ApiCalendar(config);
 
 const EventsDisplay = (props) => {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const [createEvent, setCreateEvent] = useState(false);
-  //   const family = useSelector((state) => state.rootReducer.family);
   const handleCreateToggle = () => setCreateEvent(!createEvent);
 
   const onSubmit = (data) => {
-    console.log(data);
+    const start = new Date(data.startDate).toISOString();
+
+    const end = new Date(data.endDate).toISOString();
 
     dispatch(addEvent(data, selectedList));
+    const kids = props.user.children.filter((child) =>
+      selectedList.includes(child._id)
+    );
+    const addKids = kids.map(
+      (kid) => `\n${kid.name}, ${kid.age}, ${kid.childFacts} \n`
+    );
 
+    apiCalendar
+      .createEvent({
+        title: data.title,
+        description: `${data.description}\n ${addKids}\n http://localhost:3000`,
+        end: {
+          dateTime: `${end}`,
+        },
+        start: {
+          dateTime: `${start}`,
+        },
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     reset();
     setCreateEvent(!createEvent);
     setSelectedList("");
   };
 
-  const [selectedList, setSelectedList] = useState([]);
+  const handleItemClick = (e, name) => {
+    if (name === "sign-in") {
+      apiCalendar.handleAuthClick();
+    } else if (name === "sign-out") {
+      apiCalendar.handleSignoutClick();
+    }
+  };
 
+  const [selectedList, setSelectedList] = useState([]);
   const handleChange = (e) => {
     if (e.target.checked) {
       setSelectedList([...selectedList, e.target.value]);
@@ -32,9 +77,15 @@ const EventsDisplay = (props) => {
       setSelectedList(selectedList.filter((x) => x !== e.target.value));
     }
   };
-
   return (
     <div>
+      <button
+        onClick={(e) => handleItemClick(e, "sign-in")}
+        className="google-button"
+      >
+        Authorize Google Calendar
+      </button>
+
       <div>
         {!createEvent ? (
           <button onClick={handleCreateToggle}>Add New Event</button>
@@ -42,19 +93,16 @@ const EventsDisplay = (props) => {
           <div>
             <form>
               <div>
-                {/* description: { type: String, required: true },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true }, */}
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
-                    Description
+                    Title
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="title"
                     placeholder=" Event Title"
-                    {...register("Title")}
+                    {...register("title")}
                   />
                 </div>
                 <div className="mb-3">
@@ -74,7 +122,7 @@ const EventsDisplay = (props) => {
                     Start Date
                   </label>
                   <input
-                    type="datetime-local"
+                    type="dateTime-local"
                     className="form-control"
                     id=""
                     {...register("startDate")}
@@ -85,7 +133,7 @@ const EventsDisplay = (props) => {
                     End Date
                   </label>
                   <input
-                    type="datetime-local"
+                    type="dateTime-local"
                     className="form-control"
                     id=""
                     {...register("endDate")}
@@ -137,7 +185,6 @@ const EventsDisplay = (props) => {
       <>
         {props.user.events ? (
           <>
-            {/* <ConfirmedEvents events={props.user} /> */}
             <PendingEvents user={props.user} />
           </>
         ) : (

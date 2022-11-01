@@ -1,22 +1,9 @@
 import React from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../actions/fetchUser";
-import FamilyDisplay from "./FamilyDisplay";
-import EventsDisplay from "./EventsDisplay";
 
-const Profile = () => {
-  const dispatch = useDispatch();
+import { Outlet, Link } from "react-router-dom";
 
-  const token = localStorage.token;
-  useEffect(() => {
-    dispatch(fetchUser(token));
-  }, [dispatch, token]);
-
-  const user = useSelector(
-    (state) => state.rootReducer.user.currentUser || null
-  );
-
+const Profile = (props) => {
+  const user = props.user;
   if (!user) {
     return (
       <div className="container">
@@ -29,14 +16,25 @@ const Profile = () => {
         <div className="h1">
           <h1>Welcome to your page {user.firstname}</h1>
         </div>
-        <div className="row">
-          <div className="col-4 ">
-            <FamilyDisplay user={user} />
+        <nav className="navbar navbar-light bg-light">
+          <div className="container">
+            <div className="row">
+              <div className="container">
+                <div className="navbar-brand">
+                  <Link className="link" to="/profile/family">
+                    Your Family
+                  </Link>
+
+                  <Link className="link" to="/profile/events">
+                    Your Events
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-4 ">
-            <h3 className="h3">Your Upcoming Events</h3>
-            <EventsDisplay user={user} />
-          </div>
+        </nav>
+        <div>
+          <Outlet />
         </div>
       </div>
     );
