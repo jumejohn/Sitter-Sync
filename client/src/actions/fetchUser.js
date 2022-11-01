@@ -12,9 +12,8 @@ export const fetchUser = (token) => async (dispatch) => {
         payload: response.data,
       });
     })
-    .catch((error) => {
+    .catch(async (error) => {
       console.log(error);
-      // localStorage.clear();
-      // window.location.href = "/login";
+      window.location.href = "/login";
     });
 };
