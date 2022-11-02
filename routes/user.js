@@ -12,26 +12,6 @@ const requireAuth = passport.authenticate("jwt", { session: false });
 const User = require("../models/UserModel");
 const Event = require("../models/EventModel");
 const Child = require("../models/ChildModel");
-const { populate } = require("../models/UserModel");
-
-/* GET user by id */
-router.get("/:userId", requireAuth, function (req, res, next) {
-  const id = req.params.userId;
-  User.findById(id)
-    .populate({
-      path: "events",
-      populate: { path: "children", model: "Child" },
-    })
-    .populate("children")
-    .exec((err, user) => {
-      if (err) {
-        res.status(400).send(err);
-        return next(err);
-      } else {
-        res.status(200).send(user).end();
-      }
-    });
-});
 
 /* POST add new user */
 router.post("/", function (req, res, next) {
@@ -69,6 +49,25 @@ router.post("/", function (req, res, next) {
   }
 });
 
+/* GET user by id */
+router.get("/:userId", requireAuth, function (req, res, next) {
+  const id = req.params.userId;
+  User.findById(id)
+    .populate({
+      path: "events",
+      populate: { path: "children", model: "Child" },
+    })
+    .populate("children")
+    .exec((err, user) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        res.status(200).send(user).end();
+      }
+    });
+});
+
 /* DELETE remove user by id */
 router.delete("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
@@ -85,7 +84,7 @@ router.delete("/:userId", requireAuth, function (req, res, next) {
   });
 });
 
-// Edit user by id
+// Add a new Child
 router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
   const userId = req.params.userId;
   const filter = { _id: userId };
@@ -176,6 +175,40 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
       });
     }
   });
+});
+
+router.put("/editevent/:eventId", requireAuth, async function (req, res, next) {
+  const eventId = req.params.eventId;
+  const {
+    title,
+    description,
+    startDate,
+    endDate,
+    children,
+    confirmedUsers,
+    invitedUsers,
+  } = req.body;
+  Event.findOneAndUpdate(
+    { _id: eventId },
+    {
+      title,
+      description,
+      startDate,
+      endDate,
+      children,
+      confirmedUsers,
+      invitedUsers,
+    },
+    async (err, event) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        res.status(204).json(event);
+        res.end();
+      }
+    }
+  );
 });
 
 router.delete("/event/:eventId", requireAuth, async function (req, res, next) {

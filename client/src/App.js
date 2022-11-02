@@ -10,13 +10,17 @@ import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
 import FamilyDisplay from "./components/FamilyDisplay";
 import EventsDisplay from "./components/EventsDisplay";
+import Nav from "./components/Nav";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
 
   const token = localStorage.token;
   useEffect(() => {
-    dispatch(fetchUser(token));
+    if (token) {
+      dispatch(fetchUser(token));
+    }
   }, [dispatch, token]);
 
   const user = useSelector(
@@ -25,6 +29,8 @@ function App() {
 
   return (
     <div className="App">
+      <Nav />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile user={user} />}>
@@ -42,6 +48,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
+
+      <Footer />
     </div>
   );
 }

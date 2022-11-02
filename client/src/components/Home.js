@@ -11,13 +11,19 @@ const Home = () => {
   });
 
   return (
-    <div>
-      <h1>Welcome to Sitter-Synced</h1>
-
-      <p>Are you ready to connect with your sitter?</p>
-      <p>
-        <a href="/login">Login</a> or <a href="/signup">Sign-Up</a>
-      </p>
+    <div className="whitespace-container">
+      <div></div>
+      <div className="content-box">
+        <div className="banner">
+          <h1>Welcome to Sitter-Synced</h1>
+        </div>
+        <div>
+          <h4>Are you ready to connect with your sitter?</h4>
+          <p>
+            <a href="/login">Login</a> or <a href="/signup">Sign-Up</a>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

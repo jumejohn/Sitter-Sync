@@ -20,41 +20,38 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="mb-3">
-        <label htmlFor="username" className="form-label">
-          Username
-        </label>
-        <input
-          type="username"
-          className="form-control"
-          id="username"
-          placeholder="name@example.com"
-          {...register("username")}
-        />
+    <div className="whitespace-container">
+      <div></div>
+      <div className="content-box">
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="username"
+            className="form-control"
+            id="username"
+            placeholder="name@example.com"
+            {...register("username")}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="password"
+            {...register("password")}
+          />
+        </div>
+        <button type="submit" onClick={handleSubmit(onSubmit)}>
+          Sign In
+        </button>
       </div>
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="password"
-          placeholder="password"
-          {...register("password")}
-        />
-      </div>
-      <button type="submit" onClick={handleSubmit(onSubmit)}>
-        Sign In
-      </button>
-    </>
-
-    // <>
-    //   <button>
-    //     <a href="http://localhost:8000/auth/google">Login with Google</a>
-    //   </button>
-    // </>
+    </div>
   );
 };
 

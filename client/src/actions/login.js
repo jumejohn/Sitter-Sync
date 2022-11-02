@@ -11,9 +11,9 @@ export const handleLogin = (userData) => (dispatch) => {
         payload: response.data,
       });
       //shows the data returned in the payload for dev purposes
-      console.log("login action", response.data);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userID", response.data.userID);
+      window.location.reload();
     })
     .catch(function (error) {
       console.log(error);

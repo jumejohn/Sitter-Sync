@@ -12,9 +12,9 @@ const PendingEvents = (props) => {
         <div>
           {events.map((event) => {
             return (
-              <div key={event._id}>
+              <li key={event._id} className="card">
                 <EventInfo event={event} />
-              </div>
+              </li>
             );
           })}
         </div>

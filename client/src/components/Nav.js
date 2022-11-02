@@ -14,7 +14,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="navbar top-nav">
+    <nav className="navbar fixed-top top-nav">
       <div className="container">
         <div className="row">
           <div>
@@ -31,10 +31,14 @@ const Nav = () => {
         </div>
 
         {!loggedIn ? (
-          <Link to="/login">Login</Link>
+          <Link to="/login">
+            <button className="nav-button">Login</button>
+          </Link>
         ) : (
           <>
-            <button onClick={onLogout}>Logout</button>
+            <button className="nav-button" onClick={onLogout}>
+              Logout
+            </button>
           </>
         )}
       </div>

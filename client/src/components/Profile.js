@@ -12,24 +12,21 @@ const Profile = (props) => {
     );
   } else {
     return (
-      <div className="container">
-        <div className="h1">
+      <div>
+        <div className="h1 welcome-tagline">
           <h1>Welcome to your page {user.firstname}</h1>
         </div>
-        <nav className="navbar navbar-light bg-light">
-          <div className="container">
-            <div className="row">
-              <div className="container">
-                <div className="navbar-brand">
-                  <Link className="link" to="/profile/family">
-                    Your Family
-                  </Link>
-
-                  <Link className="link" to="/profile/events">
-                    Your Events
-                  </Link>
-                </div>
-              </div>
+        <nav className="navbar profile-nav">
+          <div className="navbar-brand profile">
+            <div>
+              <Link className="link profile-link" to="/profile/family">
+                Your Family
+              </Link>
+            </div>
+            <div>
+              <Link className="link profile-link" to="/profile/events">
+                Your Events
+              </Link>
             </div>
           </div>
         </nav>

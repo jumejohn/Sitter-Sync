@@ -17,54 +17,92 @@ const FamilyDisplay = (props) => {
   };
 
   return (
-    <>
+    <div className="row whitespace-container-row">
       <h3 className="h3">Current Family</h3>
-
-      {createFam ? (
-        <>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="name"
-              className="form-control"
-              id="name"
-              placeholder=" Name"
-              {...register("name")}
-            />
+      <div className="row whitespace-container-row">
+        <div className="container col">
+          <div className=" content-box ">
+            <div className="whitespace-container">
+              <div className="content-box">
+                <ChildrenDisplay user={props.user} className="card-container" />
+              </div>
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="age" className="form-label">
-              Age
-            </label>
-            <input
-              type="age"
-              className="form-control"
-              id="name"
-              placeholder=" Age"
-              {...register("age")}
-            />
+        </div>
+        <div className="container col">
+          <div className="content-box">
+            {createFam ? (
+              <>
+                <div className="whitespace-container">
+                  <div className="content-box">
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
+                    <input
+                      type="name"
+                      className="form-control form-input"
+                      id="name"
+                      placeholder="Name"
+                      {...register("name")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="age" className="form-label">
+                      Age
+                    </label>
+                    <input
+                      type="age"
+                      className="form-control form-input"
+                      id="name"
+                      placeholder="Age"
+                      {...register("age")}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="childFacts" className="form-label">
+                      Special Notes
+                    </label>
+                    <textarea
+                      type="text"
+                      rows="6"
+                      className="form-control form-input"
+                      id="childFacts"
+                      placeholder="Likes to smile, takes meds, etc..."
+                      {...register("childFacts")}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      onClick={handleSubmit(onSubmit)}
+                      className="form-button"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      onClick={handleCreateToggle}
+                      className="form-button"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="whitespace-container">
+                <div className="content-box">
+                  <button
+                    onClick={handleCreateToggle}
+                    className="add-new-button"
+                  >
+                    Add New Child
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="mb-3">
-            <label htmlFor="childFacts" className="form-label">
-              Special Notes
-            </label>
-            <textarea
-              type="text"
-              className="form-control"
-              id="childFacts"
-              placeholder="Special Notes"
-              {...register("childFacts")}
-            />
-          </div>
-          <button onClick={handleSubmit(onSubmit)}>Submit</button>
-        </>
-      ) : (
-        <button onClick={handleCreateToggle}>Add New Child</button>
-      )}
-      <ChildrenDisplay user={props.user} />
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 
