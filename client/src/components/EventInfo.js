@@ -170,7 +170,7 @@ const EventInfo = (props) => {
                         </p>
                         <p>{event.description}</p>
                       </div>
-                      <div className="content-box left-align-text">
+                      <div className="content-box-left-align-text">
                         {event.children.map((child) => (
                           <div key={child._id}>
                             <p>{child.name}</p>
