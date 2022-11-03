@@ -32,7 +32,9 @@ const MyAccount = (props) => {
           <div>
             Children:{" "}
             {user.children.map((child) => (
-              <li key={child._id}>{child.name}</li>
+              <li key={child._id} style={{ listStyle: "none" }}>
+                {child.name}
+              </li>
             ))}
           </div>
         </div>
@@ -40,7 +42,9 @@ const MyAccount = (props) => {
           <div>
             Events:{" "}
             {user.events.map((event) => (
-              <li key={event._id}>{event.title}</li>
+              <li key={event._id} style={{ listStyle: "none" }}>
+                {event.title}
+              </li>
             ))}
           </div>
         </div>
