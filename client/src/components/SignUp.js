@@ -16,7 +16,10 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <div>
+      <h1 className="welcome-tagline">
+        Complete all fields to register a new account
+      </h1>
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
           Email
@@ -37,7 +40,7 @@ const SignUp = () => {
           type="username"
           className="form-control"
           id="username"
-          placeholder="name@example.com"
+          placeholder="username"
           {...register("username")}
         />
       </div>
@@ -80,7 +83,7 @@ const SignUp = () => {
       <button type="submit" onClick={handleSubmit(onSubmit)}>
         Sign Up
       </button>
-    </>
+    </div>
   );
 };
 
