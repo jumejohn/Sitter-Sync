@@ -102,11 +102,11 @@ const EventsDisplay = (props) => {
         <div className="container col">
           <div className=" content-box ">
             {props.user.events.length > 0 ? (
-              <div className="whitespace-container">
-                <ul className=" card content-box">
+              <>
+                <ul className=" card ">
                   <PendingEvents user={props.user} />
                 </ul>
-              </div>
+              </>
             ) : (
               <div>
                 <h4>No Events Scheduled Yet</h4>
@@ -140,12 +140,7 @@ const EventsDisplay = (props) => {
                     >
                       Yes
                     </button>
-                    <button
-                      onClick={(e) => handleItemClick(e, "sign-out")}
-                      className="google-button"
-                    >
-                      No
-                    </button>
+
                     <hr />
                   </div>
 
@@ -164,13 +159,13 @@ const EventsDisplay = (props) => {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="description" className="form-label">
-                        Description
+                        Special Instructions
                       </label>
                       <textarea
                         type="text area"
                         className="form-control form-input"
                         id="description"
-                        placeholder=" Event Description"
+                        placeholder="Bed at 8, feed dog at 6..."
                         {...register("description")}
                       />
                     </div>

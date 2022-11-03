@@ -9,15 +9,19 @@ const PendingEvents = (props) => {
   return (
     <>
       {events ? (
-        <div>
+        <>
           {events.map((event) => {
             return (
-              <li key={event._id} className="card">
+              <li
+                key={event._id}
+                style={{ listStyle: "none" }}
+                className="content-box"
+              >
                 <EventInfo event={event} />
               </li>
             );
           })}
-        </div>
+        </>
       ) : null}
     </>
   );

@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "../actions/deleteUser";
+import { handleLogout } from "../actions/logout";
 
 const MyAccount = (props) => {
+  const dispatch = useDispatch();
   const user = props.user;
   const [open, setOpen] = useState(false);
   const toggleModal = () => {
     setOpen(!open);
+  };
+  const handleClick = () => {
+    dispatch(deleteUser(user._id));
+    localStorage.removeItem("userID");
+
+    dispatch(handleLogout());
   };
 
   return (
@@ -53,7 +63,7 @@ const MyAccount = (props) => {
               <h4>
                 This is irreversible and remove all access to your account.
               </h4>
-              <button>Yes</button>
+              <button onClick={handleClick}>Yes</button>
               <button onClick={toggleModal}>No</button>
             </div>
           </Modal>

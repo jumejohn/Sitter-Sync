@@ -43,8 +43,8 @@ const EventInfo = (props) => {
   };
 
   return (
-    <div className="content-box">
-      <div className="card-container">
+    <div>
+      <div className="content-box">
         <h5 className="card-title family-button" onClick={toggleModal}>
           {dayjs(event.startDate).format("MMM D")} : {event.title}
         </h5>
@@ -59,7 +59,7 @@ const EventInfo = (props) => {
         >
           <div>
             {edit ? (
-              <div className="card " style={{ maxWidth: "100%" }}>
+              <div className="card" style={{ maxWidth: "100%" }}>
                 <div className="row">
                   <div className="whitespace-container">
                     <div className="whitespace-container-row">
@@ -76,13 +76,13 @@ const EventInfo = (props) => {
                         />
                         <div className="mb-3">
                           <label htmlFor="description" className="form-label">
-                            Description
+                            Special Instructions
                           </label>
                           <textarea
                             type="text area"
                             className="form-control form-input"
                             id="description"
-                            placeholder=" Event Description"
+                            placeholder="Bed at 8, feed dog at 6..."
                             {...register("description")}
                           />
                         </div>
@@ -148,7 +148,7 @@ const EventInfo = (props) => {
                         </div>
                       </div>
                       <div>
-                        <div className="whitespace-container">
+                        <div>
                           <div className="mb-3">
                             <button
                               onClick={handleSubmit(onSubmit)}
@@ -189,7 +189,7 @@ const EventInfo = (props) => {
                         ))}
                         <div>{event.confirmedUsers ? "Confirmed" : null}</div>
                       </div>
-                      <div>
+                      <div className="card-container">
                         <div>
                           <button onClick={toggleModal} className="form-button">
                             CLOSE

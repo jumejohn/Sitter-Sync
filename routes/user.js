@@ -71,15 +71,12 @@ router.get("/:userId", requireAuth, function (req, res, next) {
 /* DELETE remove user by id */
 router.delete("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;
-  User.findByIdAndDelete(id).exec((err) => {
+  User.findByIdAndDelete(id).exec((err, user) => {
     if (err) {
       res.status(400).send(err);
       return next(err);
     } else {
-      res
-        .send("User has been successfully removed from the database")
-        .status(204)
-        .end();
+      return res.status(200).json(user);
     }
   });
 });
@@ -132,6 +129,18 @@ router.put("/editchild/:childId", requireAuth, async function (req, res, next) {
       }
     }
   );
+});
+
+router.delete("/child/:childId", requireAuth, async function (req, res, next) {
+  const childId = req.params.childId;
+  Child.findByIdAndDelete(childId).exec((err, child) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      return res.status(200).json(child);
+    }
+  });
 });
 
 router.post("/:userId/event", requireAuth, async function (req, res, next) {

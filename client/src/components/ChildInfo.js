@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { editChild } from "../actions/EditChild";
+import { deleteChild } from "../actions/deleteChild";
 
 Modal.setAppElement("#root");
 
@@ -23,6 +24,11 @@ const ChildInfo = (props) => {
     dispatch(editChild(data, child._id));
     reset();
     toggleEdit();
+  };
+
+  const handleClick = () => {
+    dispatch(deleteChild(child._id));
+    window.location.reload();
   };
 
   return (
@@ -68,7 +74,7 @@ const ChildInfo = (props) => {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="childFacts" className="form-label">
-                    Special Notes
+                    Things you should know about me:
                   </label>
                   <textarea
                     type="text"
@@ -119,6 +125,12 @@ const ChildInfo = (props) => {
                         </div>
                         <button onClick={toggleEdit} className="add-new-button">
                           Edit Details
+                        </button>
+                        <button
+                          className="add-new-button"
+                          onClick={handleClick}
+                        >
+                          Delete Child
                         </button>
                       </div>
                       <div>
