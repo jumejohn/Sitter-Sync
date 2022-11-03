@@ -24,7 +24,7 @@ const MyAccount = (props) => {
           <div>
             Events:{" "}
             {user.events.map((event) => (
-              <li>{event.title}</li>
+              <li key={event._id}>{event.title}</li>
             ))}
           </div>
         </div>
