@@ -33,7 +33,7 @@ const Login = () => {
                 type="username"
                 className="form-control"
                 id="username"
-                placeholder="name@example.com"
+                placeholder="username"
                 {...register("username")}
               />
             </div>
@@ -49,8 +49,21 @@ const Login = () => {
                 {...register("password")}
               />
             </div>
-            <button type="submit" onClick={handleSubmit(onSubmit)}>
+            <button
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+              className="nav-button"
+            >
               Sign In
+            </button>
+            or
+            <button className="nav-button">
+              <a
+                href="/signup"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Sign-Up
+              </a>
             </button>
           </div>
         </div>
