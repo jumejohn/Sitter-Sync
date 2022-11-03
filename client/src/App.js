@@ -12,6 +12,7 @@ import FamilyDisplay from "./components/FamilyDisplay";
 import EventsDisplay from "./components/EventsDisplay";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
+import MyAccount from "./components/MyAccount";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function App() {
             path="/profile/events"
             element={<EventsDisplay user={user} />}
           />
+          <Route path="/profile/me" element={<MyAccount user={user} />} />
         </Route>
 
         <Route path="/about" element={<About />} />

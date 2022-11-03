@@ -5,6 +5,7 @@ export const addEvent = (eventData, children) => (dispatch) => {
   const token = localStorage.token;
   const url = `/user/${userID}/event`;
   const data = {
+    title: eventData.title,
     description: eventData.description,
     startDate: eventData.startDate,
     endDate: eventData.endDate,

@@ -28,6 +28,11 @@ const Profile = (props) => {
                 Your Events
               </Link>
             </div>
+            <div>
+              <Link className="link profile-link" to="/profile/me">
+                Your Account
+              </Link>
+            </div>
           </div>
         </nav>
         <div>

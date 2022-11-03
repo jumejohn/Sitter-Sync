@@ -69,6 +69,7 @@ const EventsDisplay = (props) => {
     reset();
     setCreateEvent(!createEvent);
     setSelectedList("");
+    window.location.reload();
   };
 
   //Google Authentication if using the Google Calendar

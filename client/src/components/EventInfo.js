@@ -20,6 +20,7 @@ const EventInfo = (props) => {
   };
   const deleteAnEvent = () => {
     dispatch(deleteEvent(event._id));
+    window.location.reload();
   };
 
   const toggleEdit = () => {
@@ -45,7 +46,7 @@ const EventInfo = (props) => {
     <div className="content-box">
       <div className="card-container">
         <h5 className="card-title family-button" onClick={toggleModal}>
-          {dayjs(event.startDate).format("MMM D")}:{event.title}
+          {dayjs(event.startDate).format("MMM D")} : {event.title}
         </h5>
 
         <Modal
