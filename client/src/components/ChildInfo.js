@@ -126,20 +126,14 @@ const ChildInfo = (props) => {
                           <br />
                           {child.childFacts}
                         </div>
-                        <button onClick={toggleEdit} className="add-new-button">
+                        <button onClick={toggleEdit} className="form-button">
                           Edit Details
                         </button>
-                        <button
-                          className="add-new-button"
-                          onClick={handleClick}
-                        >
+                        <button className="form-button" onClick={handleClick}>
                           Delete Child
                         </button>
 
-                        <button
-                          onClick={toggleModal}
-                          className="add-new-button"
-                        >
+                        <button onClick={toggleModal} className="form-button">
                           Close
                         </button>
                       </div>

@@ -68,6 +68,42 @@ router.get("/:userId", requireAuth, function (req, res, next) {
     });
 });
 
+router.put("/:userId", requireAuth, async function (req, res, next) {
+  const userId = req.params.userId;
+  const {
+    username,
+    firstname,
+    lastname,
+    email,
+    avatarUrl,
+    children,
+    family,
+    password,
+  } = req.body;
+  User.findOneAndUpdate(
+    { _id: userId },
+    {
+      username,
+      firstname,
+      lastname,
+      email,
+      avatarUrl,
+      children,
+      family,
+      password,
+    },
+    async (err, user) => {
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        res.status(204).json(user);
+        res.end();
+      }
+    }
+  );
+});
+
 /* DELETE remove user by id */
 router.delete("/:userId", requireAuth, function (req, res, next) {
   const id = req.params.userId;

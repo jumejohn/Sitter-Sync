@@ -219,7 +219,7 @@ const EventInfo = (props) => {
                       <div className="card-container">
                         <div>
                           <button onClick={toggleModal} className="form-button">
-                            CLOSE
+                            Close
                           </button>
                         </div>
                         <div>
