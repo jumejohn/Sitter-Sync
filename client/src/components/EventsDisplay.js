@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import ApiCalendar from "react-google-calendar-api";
 import PendingEvents from "./PendingEvents";
 import { addEvent } from "../actions/AddEvent";
+import InvitedEvents from "./InvitedEvents";
 
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -112,6 +113,11 @@ const EventsDisplay = (props) => {
                 <h4>No Events Scheduled Yet</h4>
               </div>
             )}
+          </div>
+          <div className="container col">
+            <div className="content-box">
+              <InvitedEvents user={props.user} />
+            </div>
           </div>
         </div>
         <div className="container col">

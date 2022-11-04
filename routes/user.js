@@ -81,6 +81,50 @@ router.delete("/:userId", requireAuth, function (req, res, next) {
   });
 });
 
+router.put("/:userId/invitedevents", function (req, res, next) {
+  const id = req.params;
+  const { email } = req.body;
+  console.log("req.body", req.body);
+  Event.find({ invitedUsers: email })
+    .populate("children")
+    .exec((err, event) => {
+      console.log(event);
+      if (err) {
+        res.status(400).send(err);
+        return next(err);
+      } else {
+        console.log(event);
+        res.status(200).json(event);
+      }
+    });
+});
+router.put("/:userId/confirmevent", async function (req, res, next) {
+  const { userId } = req.params;
+  console.log(userId);
+  const { event, email } = req.body;
+  console.log(event, "event");
+  const eventUpdate = {
+    $pull: { invitedUser: { $in: email } },
+    $push: { confirmedUsers: userId },
+  };
+  Event.updateOne({ _id: event }, eventUpdate).exec();
+  User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $push: { events: event },
+    }
+  ).exec((err, event) => {
+    if (err) {
+      res.status(400).send(err);
+      return next(err);
+    } else {
+      console.log(event, "result");
+      res.status(204).json(event);
+      res.end();
+    }
+  });
+});
+
 // Add a new Child
 router.post("/:userId/addchild", requireAuth, async function (req, res, next) {
   const userId = req.params.userId;

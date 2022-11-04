@@ -8,7 +8,7 @@ const EventSchema = new Schema({
   endDate: { type: Date /* required: true  */ },
   owner: { type: Schema.Types.ObjectId, ref: "User" },
   children: [{ type: Schema.Types.ObjectId, ref: "Child" }],
-  confirmedUsers: { type: Boolean },
+  confirmedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   invitedUsers: [{ type: String /*  required: true */ }],
 });
 
