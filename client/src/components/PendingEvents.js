@@ -2,23 +2,20 @@ import React from "react";
 import EventInfo from "./EventInfo";
 
 const PendingEvents = (props) => {
-  const events =
-    props.user.events.filter((event) => event.invitedUsers.length > 0) || null;
-  console.log("user pending events", events);
+  const events = props.user.events;
 
   return (
     <>
+      <h3>Your upcoming events</h3>
       {events ? (
         <>
           {events.map((event) => {
             return (
-              <li
-                key={event._id}
-                style={{ listStyle: "none" }}
-                className="card"
-              >
-                <EventInfo event={event} />
-              </li>
+              <div className="card mb-3 content-box" key={event._id}>
+                <div className="card-container">
+                  <EventInfo event={event} />
+                </div>
+              </div>
             );
           })}
         </>

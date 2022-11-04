@@ -101,7 +101,7 @@ const ChildInfo = (props) => {
               <>
                 <div className="card " style={{ maxWidth: "100%" }}>
                   <div className="row">
-                    <div className="col ">
+                    <div className="col" style={{ justifyItems: "center" }}>
                       <img
                         src="https://source.unsplash.com/random"
                         className="img-fluid rounded-start"
@@ -110,7 +110,10 @@ const ChildInfo = (props) => {
                     </div>
 
                     <div className="col card-container content-box">
-                      <div className=" content-box">
+                      <div
+                        className=" content-box"
+                        style={{ marginBottom: "30px" }}
+                      >
                         <h2>{child.name}</h2>
                         <h4>Age: {child.age}</h4>
                         <div>
@@ -132,8 +135,7 @@ const ChildInfo = (props) => {
                         >
                           Delete Child
                         </button>
-                      </div>
-                      <div>
+
                         <button
                           onClick={toggleModal}
                           className="add-new-button"

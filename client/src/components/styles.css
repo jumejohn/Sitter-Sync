@@ -155,9 +155,11 @@ img {
   background-color: #d88080;
   padding: 20px;
   font-weight: 700;
+  border: 1px black solid
 }
 .family-button:hover {
   cursor: pointer;
+
 }
 .add-new-button {
   margin: 10px;

@@ -21,64 +21,62 @@ const InvitedEventInfo = (props) => {
   const handleDecline = () => {};
   return (
     <div>
-      <div className="content-box">
-        <h5 className="card-title family-button" onClick={toggleModal}>
-          {dayjs(event.startDate).format("MMM D")} : {event.title}
-        </h5>
+      <h5 className="card-title family-button" onClick={toggleModal}>
+        {dayjs(event.startDate).format("MMM D")} : {event.title}
+      </h5>
 
-        <Modal
-          isOpen={open}
-          onRequestClose={toggleModal}
-          contentLabel={event.title}
-          style={{
-            content: { margin: "40px", display: "flex", height: "100%" },
-          }}
-        >
-          <div>
-            <div className="card " style={{ maxWidth: "100%" }}>
-              <div className="row">
-                <div className="whitespace-container">
-                  <div className="whitespace-container-row">
-                    <div className="content-box">
-                      <h2>{event.title}</h2>
-                      <p>
-                        {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
-                        {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
-                      </p>
-                      <p>{event.description}</p>
-                    </div>
-                    <div className="content-box-left-align-text">
-                      {event.children.map((child) => (
-                        <div key={child._id}>
-                          <p>{child.name}</p>
-                          <p>{child.age}</p>
-                          <p>{child.childFacts}</p>
-                        </div>
-                      ))}
-                      <div>{event.confirmedUsers ? "Confirmed" : null}</div>
-                    </div>
-                    <div className="card-container">
-                      <div>
-                        <button onClick={toggleModal} className="form-button">
-                          CLOSE
-                        </button>
+      <Modal
+        isOpen={open}
+        onRequestClose={toggleModal}
+        contentLabel={event.title}
+        style={{
+          content: { margin: "40px", display: "flex", height: "100%" },
+        }}
+      >
+        <div>
+          <div className="card " style={{ maxWidth: "100%" }}>
+            <div className="row">
+              <div className="whitespace-container">
+                <div className="whitespace-container-row">
+                  <div className="content-box">
+                    <h2>{event.title}</h2>
+                    <p>
+                      {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
+                      {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
+                    </p>
+                    <p>{event.description}</p>
+                  </div>
+                  <div className="content-box-left-align-text">
+                    {event.children.map((child) => (
+                      <div key={child._id}>
+                        <p>{child.name}</p>
+                        <p>{child.age}</p>
+                        <p>{child.childFacts}</p>
                       </div>
-                      <div>
-                        <button onClick={handleConfirm} className="form-button">
-                          Confirm Event
-                        </button>
-                        <button onClick={handleDecline} className="form-button">
+                    ))}
+                    <div>{event.confirmedUsers ? "Confirmed" : null}</div>
+                  </div>
+                  <div className="card-container">
+                    <div>
+                      <button onClick={toggleModal} className="form-button">
+                        CLOSE
+                      </button>
+                    </div>
+                    <div>
+                      <button onClick={handleConfirm} className="form-button">
+                        Confirm Event
+                      </button>
+                      {/* <button onClick={handleDecline} className="form-button">
                           Decline Event
-                        </button>
-                      </div>
+                        </button> */}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     </div>
   );
 };

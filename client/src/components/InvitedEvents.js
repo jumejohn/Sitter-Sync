@@ -23,13 +23,11 @@ const InvitedEvents = (props) => {
           {shownEvents.map((event) => {
             if (!event.confirmedUsers.length > 0) {
               return (
-                <li
-                  key={event._id}
-                  style={{ listStyle: "none" }}
-                  className="content-box"
-                >
-                  <InvitedEventInfo event={event} />
-                </li>
+                <div className="card mb-3 content-box" key={event._id}>
+                  <div className="card-container">
+                    <InvitedEventInfo event={event} />
+                  </div>
+                </div>
               );
             }
           })}
