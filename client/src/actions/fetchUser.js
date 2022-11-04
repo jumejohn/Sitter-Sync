@@ -14,6 +14,7 @@ export const fetchUser = (token) => async (dispatch) => {
     })
     .catch(async (error) => {
       console.log(error);
+      localStorage.clear();
       window.location.href = "/login";
     });
 };
