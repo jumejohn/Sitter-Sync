@@ -50,7 +50,7 @@ const EventsDisplay = (props) => {
       apiCalendar
         .createEvent({
           title: data.title,
-          description: `${data.description}\n ${addKids}\n http://localhost:3000`,
+          description: `${data.description}\n ${addKids}\n https://sitter-synced.herokuapp.com/`,
           end: {
             dateTime: `${end}`,
           },
