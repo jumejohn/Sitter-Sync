@@ -185,42 +185,56 @@ const EventInfo = (props) => {
               <div className="row">
                 <div className="whitespace-container">
                   <div className="whitespace-container-row">
-                    <div className="content-box">
-                      <h2>{event.title}</h2>
-                      <p>
-                        {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
-                        {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
-                      </p>
-                      <p>{event.description}</p>
-                    </div>
-                    <div className="content-box-left-align-text">
-                      {event.children.map((child) => (
-                        <div key={child._id}>
-                          <p>{child.name}</p>
-                          <p>{child.age}</p>
-                          <p>{child.childFacts}</p>
+                    <div className="container">
+                      <div className="content-box">
+                        <h2>{event.title}</h2>
+                        <p>
+                          {dayjs(event.startDate).format("MMM D, YYYY h:mm A")}{" "}
+                          -{dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
+                        </p>
+                        <p>{event.description}</p>
+                        <div>
+                          <span style={{ backgroundColor: "#84d9bf" }}>
+                            {event.confirmedUsers.length > 0
+                              ? "Confirmed"
+                              : null}
+                          </span>
                         </div>
-                      ))}
-                      <div>{event.confirmedUsers ? "Confirmed" : null}</div>
-                    </div>
-                    <div className="card-container">
-                      <div>
-                        <button onClick={toggleModal} className="form-button">
-                          CLOSE
-                        </button>
                       </div>
-                      <div>
-                        <button onClick={toggleEdit} className="form-button">
-                          Edit Event Details
-                        </button>
-                        {event.owner === localStorage.userID ? (
-                          <button
-                            onClick={deleteAnEvent}
-                            className="form-button"
-                          >
-                            Delete Event?
+                    </div>
+                    <div className="container">
+                      <div className="content-box-left-align-text">
+                        <div className="card-container">
+                          {event.children.map((child) => (
+                            <div key={child._id} classname="card">
+                              <p>{child.name}</p>
+                              <p>{child.age}</p>
+                              <p>{child.childFacts}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="container">
+                      <div className="card-container">
+                        <div>
+                          <button onClick={toggleModal} className="form-button">
+                            CLOSE
                           </button>
-                        ) : null}
+                        </div>
+                        <div>
+                          <button onClick={toggleEdit} className="form-button">
+                            Edit Event Details
+                          </button>
+                          {event.owner === localStorage.userID ? (
+                            <button
+                              onClick={deleteAnEvent}
+                              className="form-button"
+                            >
+                              Delete Event?
+                            </button>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>
