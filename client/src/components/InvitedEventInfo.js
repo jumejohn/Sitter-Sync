@@ -45,16 +45,22 @@ const InvitedEventInfo = (props) => {
                       {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
                     </p>
                     <p>{event.description}</p>
+                    <div>
+                      {event.confirmedUsers.length > 0 ? "Confirmed" : null}
+                    </div>
                   </div>
-                  <div className="content-box-left-align-text">
-                    {event.children.map((child) => (
-                      <div key={child._id}>
-                        <p>{child.name}</p>
-                        <p>{child.age}</p>
-                        <p>{child.childFacts}</p>
+                  <div className="container">
+                    <div className="content-box-left-align-text">
+                      <div className="card-container">
+                        {event.children.map((child) => (
+                          <div key={child._id} classname="card">
+                            <p>{child.name}</p>
+                            <p>{child.age}</p>
+                            <p>{child.childFacts}</p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                    <div>{event.confirmedUsers ? "Confirmed" : null}</div>
+                    </div>
                   </div>
                   <div className="card-container">
                     <div>
