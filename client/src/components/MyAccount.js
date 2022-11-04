@@ -156,8 +156,12 @@ const MyAccount = (props) => {
                   <h4>
                     This is irreversible and remove all access to your account.
                   </h4>
-                  <button onClick={handleClick}>Yes</button>
-                  <button onClick={toggleModal}>No</button>
+                  <button className="add-new-button" onClick={handleClick}>
+                    Yes
+                  </button>
+                  <button className="add-new-button" onClick={toggleModal}>
+                    No
+                  </button>
                 </div>
               </Modal>
             </div>
