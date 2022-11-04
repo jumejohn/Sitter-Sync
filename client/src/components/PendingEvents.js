@@ -15,7 +15,7 @@ const PendingEvents = (props) => {
               <li
                 key={event._id}
                 style={{ listStyle: "none" }}
-                className="content-box"
+                className="card"
               >
                 <EventInfo event={event} />
               </li>
