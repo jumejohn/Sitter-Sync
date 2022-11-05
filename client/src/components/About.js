@@ -27,7 +27,7 @@ const About = () => {
           <p>
             Using Sitter Synced, you can set a new babysitting event, add all
             relevant information, and even set the event to your Google
-            Calendar.
+            Calendar.(coming soon...)
           </p>
           <p>
             This event can then be sent to your babysitter, giving them all the
@@ -35,9 +35,9 @@ const About = () => {
           </p>
 
           <p>
-            Set up a checklist as well allowing you to see when specific tasks
-            have been completed. No more do you need to worry about if your kid
-            go their meds, or if the dog got fed on time.
+            Set up a list as well allowing your sitter to clear tasks as they
+            happen. No more do you need to worry about if your kid go their
+            meds, or if the dog got fed on time.
           </p>
           <p>
             Set everything right here, and all the information is passed and
