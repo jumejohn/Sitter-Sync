@@ -133,8 +133,12 @@ const EventsDisplay = (props) => {
       ) : (
         <div className="whitespace-container">
           <div className="content-box">
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <p>Do you want to add this event to your Google Calendar?</p>
+              <p>
+                Still in testing, needs to be cleard by google, so this won't
+                work for you yet...
+              </p>
               <button
                 onClick={(e) => handleItemClick(e, "sign-in")}
                 className="google-button"
@@ -142,7 +146,7 @@ const EventsDisplay = (props) => {
                 Yes
               </button>
               <hr />
-            </div>
+            </div> */}
             <div>
               <div className="mb-3">
                 <label htmlFor="title" className="form-label">
