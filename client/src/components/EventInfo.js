@@ -46,7 +46,7 @@ const EventInfo = (props) => {
     <>
       <>
         {event.confirmedUsers.length > 0 ? (
-          <div>
+          <div className="card">
             <h6
               style={{ backgroundColor: "#84d9bf", border: "1px black solid" }}
             >
@@ -73,8 +73,11 @@ const EventInfo = (props) => {
       >
         <div>
           {edit ? (
-            <div className="card" style={{ maxWidth: "100%" }}>
-              <div className="row">
+            <div
+              className="card mb-3 vw-100 p-3 container"
+              style={{ margin: "20px" }}
+            >
+              <div className="row" style={{ overflow: "scroll" }}>
                 <div className="whitespace-container">
                   <div className="whitespace-container-row">
                     <div className="content-box">
@@ -181,8 +184,11 @@ const EventInfo = (props) => {
               </div>
             </div>
           ) : (
-            <div className="card " style={{ maxWidth: "100%" }}>
-              <div className="row">
+            <div
+              className="card mb-3 vw-100 p-3 container"
+              style={{ margin: "20px" }}
+            >
+              <div className="row" style={{ overflow: "scroll" }}>
                 <div className="whitespace-container">
                   <div className="whitespace-container-row">
                     <div className="container">

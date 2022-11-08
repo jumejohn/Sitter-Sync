@@ -31,7 +31,7 @@ const MyAccount = (props) => {
   };
 
   return (
-    <>
+    <div className="w-100 p-3">
       {edit ? (
         <div className="whitespace-container">
           <div className="content-box">
@@ -168,7 +168,7 @@ const MyAccount = (props) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ const FamilyDisplay = (props) => {
   };
 
   return (
-    <div className="row whitespace-container-row">
+    <div className="row whitespace-container-row w-100 p-3">
       <h3 className="h3">Current Family</h3>
       <div className="row whitespace-container-row">
         <div className="container col">

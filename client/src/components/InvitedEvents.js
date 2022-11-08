@@ -15,11 +15,11 @@ const InvitedEvents = (props) => {
   );
   console.log("shown", shownEvents);
   return (
-    <div>
+    <div className="w-100 p-3 mb-3">
       <h3>Events you have been invited to</h3>
 
       {shownEvents ? (
-        <div>
+        <div className="content-box">
           {shownEvents.map((event) => {
             if (!event.confirmedUsers.length > 0) {
               return (
@@ -33,7 +33,7 @@ const InvitedEvents = (props) => {
           })}
         </div>
       ) : (
-        <div>
+        <div className="content-box">
           <h4>No Events Scheduled Yet</h4>
         </div>
       )}

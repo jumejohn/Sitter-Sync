@@ -11,8 +11,8 @@ const Home = () => {
   });
 
   return (
-    <div style={{ backgroundColor: "lightgray" }}>
-      <div className="whitespace-container" style={{ marginTop: "80px" }}>
+    <div style={{ backgroundColor: "lightgray" }} className="w-100 p-3">
+      <div className="whitespace-container " style={{ marginTop: "80px" }}>
         <div className="content-box">
           <div className="banner">
             <h1>Welcome to Sitter-Synced</h1>

@@ -2,10 +2,10 @@ import React from "react";
 
 const About = () => {
   return (
-    <article>
-      <div className="whitespace-container">
+    <article className="w-100 p-3">
+      <div className="whitespace-container ">
         <h1 className="welcome-tagline">What is Sitter-Synced?</h1>
-        <div className="content-box">
+        <div className="content-box w-75 p-3">
           <p>
             What is the most annoying thing about inviting someone to watch your
             loved ones? Let's be honest, there isn't just one, there are several

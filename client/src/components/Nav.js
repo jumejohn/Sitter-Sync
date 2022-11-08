@@ -14,7 +14,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="navbar fixed-top top-nav">
+    <nav className="navbar fixed-top top-nav vw-100">
       <div className="container">
         <div className="row">
           <div>

@@ -20,8 +20,8 @@ const Login = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "lightgray" }}>
-      <div className="whitespace-container">
+    <div style={{ backgroundColor: "lightgray" }} className="w-100 p-3">
+      <div className="whitespace-container ">
         <h1 className="welcome-tagline">Login</h1>
         <div>
           <div className="content-box">

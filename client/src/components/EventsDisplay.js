@@ -97,41 +97,44 @@ const EventsDisplay = (props) => {
     }
   };
   return (
-    <div className="whitespace-container">
+    <div className="whitespace-container w-100 p-3 ">
       <h3 className="h3">Upcoming Events</h3>
       {!createEvent ? (
-        <>
-          <button onClick={handleCreateToggle} className="add-new-button">
+        <div className="w-100 p-3">
+          <button
+            onClick={handleCreateToggle}
+            className="add-new-button"
+            style={{ marginBottom: "30px" }}
+          >
             Add New Event
           </button>
-          <div className="row whitespace-container-row">
-            <div className="container">
-              <div className=" content-box col">
-                <div className="content-box ">
-                  {props.user.events.length > 0 ? (
-                    <>
-                      <ul>
-                        <PendingEvents user={props.user} />
-                      </ul>
-                    </>
-                  ) : (
-                    <div>
-                      <h4>No Events Scheduled Yet</h4>
-                    </div>
-                  )}
-                </div>
+          <div
+            className="row whitespace-container-row w-100 p-3"
+            style={{ border: "1px black solid", borderRadius: "6px" }}
+          >
+            <div className="container w-100 p-3">
+              <div className="container mb-3">
+                {props.user.events.length > 0 ? (
+                  <>
+                    <ul>
+                      <PendingEvents user={props.user} />
+                    </ul>
+                  </>
+                ) : (
+                  <div>
+                    <h4>No Events Scheduled Yet</h4>
+                  </div>
+                )}
               </div>
 
-              <div className="content-box col">
-                <div className="content-box ">
-                  <InvitedEvents user={props.user} />
-                </div>
+              <div className="container mb-3">
+                <InvitedEvents user={props.user} />
               </div>
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <div className="whitespace-container">
+        <div className="whitespace-container mb-3">
           <div className="content-box">
             {/* <div className="mb-3">
               <p>Do you want to add this event to your Google Calendar?</p>
