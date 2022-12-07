@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "react-modal";
@@ -107,7 +108,7 @@ const MyAccount = (props) => {
         </div>
       ) : (
         <div className="whitespace-container">
-          <h1>All About You</h1>
+          <Typography variant="h4">All About You</Typography>
           <div className="whitespace-container-row">
             <div className="content-box">
               <div>Email: {user.email}</div>

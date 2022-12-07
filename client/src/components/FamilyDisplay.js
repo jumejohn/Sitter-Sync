@@ -3,6 +3,16 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { addChildren } from "../actions/AddChild";
 import ChildrenDisplay from "./ChildrenDisplay";
+import {
+  Box,
+  Card,
+  Paper,
+  TextField,
+  Typography,
+  Container,
+  Button,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const FamilyDisplay = (props) => {
   const { register, handleSubmit, reset } = useForm();
@@ -18,94 +28,89 @@ const FamilyDisplay = (props) => {
   };
 
   return (
-    <div className="row whitespace-container-row w-100 p-3">
-      <h3 className="h3">Current Family</h3>
-      <div className="row whitespace-container-row">
-        <div className="container col">
-          <div className=" content-box ">
-            <div className="whitespace-container">
-              <div className="content-box">
-                <ChildrenDisplay user={props.user} className="card-container" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container col">
-          <div className="content-box">
-            {createFam ? (
-              <>
-                <div className="whitespace-container">
-                  <div className="content-box">
-                    <div className="mb-3">
-                      <label htmlFor="name" className="form-label">
-                        Name
-                      </label>
-                      <input
-                        type="name"
-                        className="form-control form-input"
-                        id="name"
-                        placeholder="Name"
-                        {...register("name")}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="age" className="form-label">
-                        Age
-                      </label>
-                      <input
-                        type="age"
-                        className="form-control form-input"
-                        id="name"
-                        placeholder="Age"
-                        {...register("age")}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="childFacts" className="form-label">
-                        Things you should know about me:
-                      </label>
-                      <textarea
-                        type="text"
-                        rows="6"
-                        className="form-control form-input"
-                        id="childFacts"
-                        placeholder="Likes to smile, takes meds, etc..."
-                        {...register("childFacts")}
-                      />
-                    </div>
-                    <div>
-                      <button
-                        onClick={handleSubmit(onSubmit)}
-                        className="form-button"
-                      >
-                        Submit
-                      </button>
-                      <button
-                        onClick={handleCreateToggle}
-                        className="form-button"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="whitespace-container">
-                <div className="content-box">
-                  <button
-                    onClick={handleCreateToggle}
-                    className="add-new-button"
-                  >
-                    Add New Child
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Paper elevation={0} sx={{ m: 5, mb: 10 }}>
+      <Typography variant="h4" sx={{ mb: 5 }}>
+        Current Family
+      </Typography>
+      <Box display="flex" flexDirection={"row"}>
+        <Container sx={{ maxWidth: "50%" }}>
+          <Card elevation={1}>
+            <ChildrenDisplay user={props.user} className="card-container" />
+          </Card>
+        </Container>
+        <Container sx={{ mb: 8, maxWidth: "50%" }}>
+          {createFam ? (
+            <Card elevation={1} sx={{ boxShadow: 1 }}>
+              <Box sx={{ p: 10 }} display="flex" flexDirection={"column"}>
+                <TextField
+                  label="Name"
+                  type="text"
+                  margin="normal"
+                  id="name"
+                  placeholder="Name"
+                  {...register("name")}
+                />
+                <TextField
+                  label="Age"
+                  type="number"
+                  margin="normal"
+                  id="name"
+                  placeholder="Age"
+                  {...register("age")}
+                />
+
+                <TextField
+                  label="Things You Should Know About Me:"
+                  margin="normal"
+                  type="text"
+                  multiline="true"
+                  rows="6"
+                  id="childFacts"
+                  placeholder="Likes to smile, takes meds, etc..."
+                  {...register("childFacts")}
+                />
+
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit(onSubmit)}
+                  className="form-button"
+                  sx={{ m: 1 }}
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleCreateToggle}
+                  className="form-button"
+                  sx={{ m: 1 }}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Card>
+          ) : (
+            <Card elevation={0}>
+              <Box sx={{ p: 10 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleCreateToggle}
+                  className="add-new-button"
+                  sx={{
+                    color: grey[700],
+                    fontWeight: "800",
+                    m: 1,
+                    letterSpacing: 1,
+                    fontSize: 18,
+                  }}
+                >
+                  Add New Child
+                </Button>
+              </Box>
+            </Card>
+          )}
+        </Container>
+      </Box>
+    </Paper>
   );
 };
 

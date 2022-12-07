@@ -1,3 +1,16 @@
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Input,
+  InputAdornment,
+  InputBase,
+  InputLabel,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -16,78 +29,93 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1 className="welcome-tagline">
-        Complete all fields to register a new account
-      </h1>
-      <div className="whitespace-container">
-        <div className="content-box">
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
+    <Paper elevation={0}>
+      <Container>
+        <Typography variant="h3" sx={{ pt: 8 }}>
+          Complete all fields to register a new account
+        </Typography>
+        <Card elevation={3} sx={{ m: 10 }}>
+          <Box sx={{ mx: 20 }}>
+            <TextField
+              label="Email"
+              fullWidth="true"
+              required="true"
+              variant="filled"
               type="email"
-              className="form-control"
+              size="small"
               id="email"
+              margin="normal"
               placeholder="name@example.com"
               {...register("email")}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="username" className="form-label">
-              Username
-            </label>
-            <input
-              type="username"
-              className="form-control"
+          </Box>
+          <Box sx={{ mx: 20 }}>
+            <TextField
+              label="Username"
+              fullWidth="true"
+              margin="normal"
+              variant="filled"
+              required="true"
+              size="small"
+              type="text"
               id="username"
               placeholder="username"
               {...register("username")}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="firstname" className="form-label">
-              First Name
-            </label>
-            <input
-              type="firstname"
-              className="form-control"
+          </Box>
+          <Box sx={{ mx: 20 }}>
+            <TextField
+              variant="filled"
+              required="true"
+              fullWidth="true"
+              label="First Name"
+              size="small"
+              margin="normal"
+              type="text"
               id="firstname"
               placeholder="First Name"
               {...register("firstname")}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="lastname" className="form-label">
-              Last Name
-            </label>
-            <input
-              type="lastname"
-              className="form-control"
+          </Box>
+          <Box sx={{ mx: 20 }}>
+            <TextField
+              variant="filled"
+              required="true"
+              fullWidth="true"
+              label="Last Name"
+              size="small"
+              margin="normal"
+              type="text"
               id="lastname"
               placeholder="Last Name"
               {...register("lastname")}
             />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
+          </Box>
+          <Box sx={{ mx: 20 }}>
+            <TextField
+              variant="filled"
+              size="small"
+              fullWidth="true"
+              label="Password"
+              margin="normal"
               type="password"
-              className="form-control"
               id="password"
               placeholder="password"
               {...register("password")}
             />
-          </div>
-          <button type="submit" onClick={handleSubmit(onSubmit)}>
-            Sign Up
-          </button>
-        </div>
-      </div>
-    </div>
+          </Box>
+          <Box sx={{ mx: 20, p: 4 }}>
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Card>
+      </Container>
+    </Paper>
   );
 };
 

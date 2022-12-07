@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { editChild } from "../actions/EditChild";
 import { deleteChild } from "../actions/deleteChild";
-
-Modal.setAppElement("#root");
+import {
+  Typography,
+  TextField,
+  Modal,
+  Box,
+  Paper,
+  CardMedia,
+  Button,
+} from "@mui/material";
 
 const ChildInfo = (props) => {
   const child = props.child;
@@ -33,117 +39,145 @@ const ChildInfo = (props) => {
 
   return (
     <>
-      <h5 className="card-title family-button" onClick={toggleModal}>
+      <Typography variant="h4" onClick={toggleModal}>
         {child.name}, {child.age}
-      </h5>
+      </Typography>
       <Modal
-        isOpen={open}
-        onRequestClose={toggleModal}
+        open={open}
+        onClose={toggleModal}
         contentLabel={child.name}
-        style={{
-          content: { margin: "40px", display: "flex", height: "100%" },
-        }}
+        sx={{ margin: "40px", display: "flex", overflow: "auto" }}
       >
-        <div className="">
-          <div className="">
-            {edit ? (
-              <div className="content-box">
-                <div className="mb-3 ">
-                  <label htmlFor="name" className="form-label">
-                    Name
-                  </label>
-                  <input
-                    type="name"
-                    className="form-control form-input"
-                    id="name"
-                    defaultValue={child.name}
-                    {...register("name")}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="age" className="form-label">
-                    Age
-                  </label>
-                  <input
-                    type="age"
-                    className="form-control form-input"
-                    id="name"
-                    defaultValue={child.age}
-                    {...register("age")}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="childFacts" className="form-label">
-                    Things you should know about me:
-                  </label>
-                  <textarea
-                    type="text"
-                    className="form-control form-input"
-                    id="childFacts"
-                    defaultValue={child.childFacts}
-                    {...register("childFacts")}
-                  />
-                </div>
-                <div className="whitespace-container-row">
-                  <button
+        <Box>
+          {edit ? (
+            <Box sx={{ p: 10, m: 5, border: "none" }}>
+              <Paper sx={{ position: "relative", p: 10, width: "100%" }}>
+                <TextField
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  type="name"
+                  id="name"
+                  label="Name"
+                  defaultValue={child.name}
+                  {...register("name")}
+                />
+
+                <TextField
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  type="age"
+                  id="name"
+                  label="Age:"
+                  defaultValue={child.age}
+                  {...register("age")}
+                />
+
+                <TextField
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  type="text"
+                  id="childFacts"
+                  multiline="true"
+                  minRows="3"
+                  label="Things you should know about me"
+                  defaultValue={child.childFacts}
+                  {...register("childFacts")}
+                />
+
+                <Box sx={{ mt: 2 }}>
+                  <Button
                     onClick={handleSubmit(onSubmit)}
-                    className="form-button"
+                    variant="contained"
+                    sx={{ m: 1 }}
                   >
                     Submit
-                  </button>
+                  </Button>
 
-                  <button onClick={toggleEdit} className="form-button">
+                  <Button
+                    onClick={toggleEdit}
+                    variant="contained"
+                    sx={{ m: 1 }}
+                  >
                     Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="card " style={{ maxWidth: "100%" }}>
-                  <div className="row">
-                    <div className="col" style={{ justifyItems: "center" }}>
-                      <img
-                        src="https://source.unsplash.com/random"
-                        className="img-fluid rounded-start"
-                        alt="..."
-                      />
-                    </div>
+                  </Button>
+                </Box>
+              </Paper>
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex", m: 5 }}>
+              <Paper
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  overflow: "auto",
+                  maxHeight: "100%",
+                }}
+              >
+                <Box sx={{ m: 10 }}>
+                  <CardMedia
+                    component="img"
+                    src="https://source.unsplash.com/random"
+                    alt={child.name}
+                    height="600px"
+                  />
+                </Box>
+                <Box sx={{ m: 10 }}>
+                  <Typography variant="h3" sx={{ p: 2 }}>
+                    {child.name}
+                  </Typography>
+                  <Typography variant="h4" sx={{ p: 2 }}>
+                    Age: {child.age}
+                  </Typography>
+                  <Box sx={{ m: 2 }}>
+                    <Typography variant="h4" sx={{ p: 2 }}>
+                      Notes about me:
+                    </Typography>
 
-                    <div className="col card-container content-box">
-                      <div
-                        className=" content-box"
-                        style={{ marginBottom: "30px" }}
-                      >
-                        <h2>{child.name}</h2>
-                        <h4>Age: {child.age}</h4>
-                        <div>
-                          <hr />
-                          <span>
-                            <p>
-                              <strong>Notes about me:</strong>
-                            </p>
-                          </span>
-                          <br />
-                          {child.childFacts}
-                        </div>
-                        <button onClick={toggleEdit} className="form-button">
-                          Edit Details
-                        </button>
-                        <button className="form-button" onClick={handleClick}>
-                          Delete Child
-                        </button>
+                    <Typography variant="h5" sx={{ p: 2 }}>
+                      {child.childFacts}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Button
+                      onClick={toggleEdit}
+                      variant="contained"
+                      sx={{ m: 2 }}
+                    >
+                      Edit Details
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={handleClick}
+                      sx={{ m: 2, backgroundColor: "red" }}
+                    >
+                      Delete Child
+                    </Button>
+                  </Box>
 
-                        <button onClick={toggleModal} className="form-button">
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+                  <Button
+                    onClick={toggleModal}
+                    variant="contained"
+                    sx={{ m: 2 }}
+                  >
+                    Close
+                  </Button>
+                </Box>
+                <Box sx={{ position: "relative", Top: 0, right: 0 }}>
+                  <Button
+                    onClick={toggleModal}
+                    variant="text"
+                    sx={{ color: "black" }}
+                  >
+                    X
+                  </Button>
+                </Box>
+              </Paper>
+            </Box>
+          )}
+        </Box>
       </Modal>
     </>
   );

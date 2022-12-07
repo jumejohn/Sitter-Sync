@@ -5,6 +5,7 @@ import ApiCalendar from "react-google-calendar-api";
 import PendingEvents from "./PendingEvents";
 import { addEvent } from "../actions/AddEvent";
 import InvitedEvents from "./InvitedEvents";
+import { Box, Button, Card, Paper, Typography } from "@mui/material";
 
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -97,42 +98,37 @@ const EventsDisplay = (props) => {
     }
   };
   return (
-    <div className="whitespace-container w-100 p-3 ">
-      <h3 className="h3">Upcoming Events</h3>
+    <Paper>
+      <Typography variant="h4" sx={{ mt: 2 }}>
+        Upcoming Events
+      </Typography>
       {!createEvent ? (
-        <div className="w-100 p-3">
-          <button
-            onClick={handleCreateToggle}
-            className="add-new-button"
-            style={{ marginBottom: "30px" }}
-          >
-            Add New Event
-          </button>
-          <div
-            className="row whitespace-container-row w-100 p-3"
-            style={{ border: "1px black solid", borderRadius: "6px" }}
-          >
-            <div className="container w-100 p-3">
-              <div className="container mb-3">
-                {props.user.events.length > 0 ? (
-                  <>
-                    <ul>
-                      <PendingEvents user={props.user} />
-                    </ul>
-                  </>
-                ) : (
-                  <div>
-                    <h4>No Events Scheduled Yet</h4>
-                  </div>
-                )}
-              </div>
+        <Paper>
+          <Box sx={{ m: 2 }}>
+            <Button onClick={handleCreateToggle} variant="contained">
+              Add New Event
+            </Button>
+          </Box>
+          <Box>
+            <Card>
+              {props.user.events.length > 0 ? (
+                <>
+                  <ul>
+                    <PendingEvents user={props.user} />
+                  </ul>
+                </>
+              ) : (
+                <div>
+                  <h4>No Events Scheduled Yet</h4>
+                </div>
+              )}
+            </Card>
 
-              <div className="container mb-3">
-                <InvitedEvents user={props.user} />
-              </div>
+            <div className="container mb-3">
+              <InvitedEvents user={props.user} />
             </div>
-          </div>
-        </div>
+          </Box>
+        </Paper>
       ) : (
         <div className="whitespace-container mb-3">
           <div className="content-box">
@@ -231,22 +227,28 @@ const EventsDisplay = (props) => {
                   {...register("invitedUsers")}
                 />
               </div>
-              <div>
-                <button
+              <Box>
+                <Button
+                  variant="contained"
                   onClick={handleSubmit(onSubmit)}
                   className="form-button"
+                  sx={{ m: 1 }}
                 >
                   Submit
-                </button>
-              </div>
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleCreateToggle}
+                  className="form-button"
+                >
+                  Cancel
+                </Button>
+              </Box>
             </div>
           </div>
-          <button onClick={handleCreateToggle} className="form-button">
-            Cancel
-          </button>
         </div>
       )}
-    </div>
+    </Paper>
   );
 };
 export default EventsDisplay;

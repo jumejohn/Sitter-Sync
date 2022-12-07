@@ -1,3 +1,10 @@
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Paper,
+} from "@mui/material";
 import React from "react";
 import ChildInfo from "./ChildInfo";
 
@@ -6,20 +13,29 @@ const ChildrenDisplay = (props) => {
   console.log(children, "children");
 
   return (
-    <div>
+    <Paper elevation={0} sx={{ m: 4 }}>
       {children.map((child) => {
         return (
-          <div className="card mb-3 content-box" key={child._id}>
-            <div className="card-container">
-              <img src="https://source.unsplash.com/random" alt={child.name} />
-              <div className="card-img-overlay ">
+          <Card
+            key={child._id}
+            elevation={0}
+            sx={{ boxShadow: 1, maxWidth: 1, p: 4 }}
+          >
+            <CardMedia
+              component="img"
+              src="https://source.unsplash.com/random"
+              alt={child.name}
+              height="190px"
+            />
+            <CardActionArea>
+              <CardContent>
                 <ChildInfo child={child} />
-              </div>
-            </div>
-          </div>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         );
       })}
-    </div>
+    </Paper>
   );
 };
 

@@ -13,6 +13,7 @@ import EventsDisplay from "./components/EventsDisplay";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import MyAccount from "./components/MyAccount";
+import { Paper } from "@mui/material";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <Paper className="App">
       <Nav />
 
       <Routes>
@@ -52,7 +53,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </div>
+    </Paper>
   );
 }
 

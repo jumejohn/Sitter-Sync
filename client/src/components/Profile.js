@@ -1,3 +1,12 @@
+import {
+  AppBar,
+  Card,
+  Container,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
 import { Outlet, Link } from "react-router-dom";
@@ -6,39 +15,46 @@ const Profile = (props) => {
   const user = props.user;
   if (!user) {
     return (
-      <div className="container w-100 p-3">
-        <h1>Loading...</h1>
-      </div>
+      <Paper>
+        <Typography variant="h2" sx={{ m: 7, pt: 7 }}>
+          Loading...
+        </Typography>
+      </Paper>
     );
   } else {
     return (
-      <div className="w-100 p-3">
-        <div className="h1 welcome-tagline">
-          <h1>Welcome to your page {user.firstname}</h1>
-        </div>
-        <nav className="navbar profile-nav w-100 p-3">
-          <div className="navbar-brand profile">
-            <div>
-              <Link className="link profile-link" to="/profile/family">
-                Your Family
-              </Link>
-            </div>
-            <div>
-              <Link className="link profile-link" to="/profile/events">
-                Your Events
-              </Link>
-            </div>
-            <div>
-              <Link className="link profile-link" to="/profile/me">
-                Your Account
-              </Link>
-            </div>
-          </div>
-        </nav>
-        <div>
-          <Outlet />
-        </div>
-      </div>
+      <Paper>
+        <Typography variant="h2" sx={{ m: 7, pt: 7 }}>
+          Welcome to your page {user.firstname}
+        </Typography>
+
+        <Paper>
+          <AppBar position="relative">
+            <Tabs value={false} aria-label="nav tabs">
+              <Container>
+                <Typography variant="subtitle1">
+                  <Tab
+                    component={Link}
+                    to="/profile/family"
+                    label="Your Family"
+                  />
+
+                  <Tab
+                    component={Link}
+                    to="/profile/events"
+                    label="Your Events"
+                  />
+
+                  <Tab component={Link} to="/profile/me" label="Your Account" />
+                </Typography>
+              </Container>
+            </Tabs>
+          </AppBar>
+          <Card>
+            <Outlet />
+          </Card>
+        </Paper>
+      </Paper>
     );
   }
 };

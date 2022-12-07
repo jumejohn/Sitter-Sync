@@ -1,5 +1,7 @@
+import { Box, Container, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { sizing } from "@mui/system";
 const Home = () => {
   const navigate = useNavigate();
 
@@ -11,21 +13,27 @@ const Home = () => {
   });
 
   return (
-    <div style={{ backgroundColor: "lightgray" }} className="w-100 p-3">
-      <div className="whitespace-container " style={{ marginTop: "80px" }}>
-        <div className="content-box">
-          <div className="banner">
-            <h1>Welcome to Sitter-Synced</h1>
-          </div>
-          <div>
-            <h4>Are you ready to connect with your sitter?</h4>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ bgcolor: "Grey", height: "fit-content" }}
+    >
+      <Paper sx={{ m: 20 }}>
+        <Box display="flex" alignItems="center" justifyContent="center"></Box>
+        <Box sx={{ p: 15 }}>
+          <Typography variant="h3">Welcome to Sitter-Synced</Typography>
+          <Box>
+            <Typography variant="h4">
+              Are you ready to connect with your sitter?
+            </Typography>
             <p>
               <a href="/login">Login</a> or <a href="/signup">Sign-Up</a>
             </p>
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
