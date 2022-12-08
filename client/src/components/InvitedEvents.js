@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getInvitedEvents } from "../actions/getInvitedEvents";
 import InvitedEventInfo from "./InvitedEventInfo";
+import { Box, Card, Typography } from "@mui/material";
 
 const InvitedEvents = (props) => {
   const dispatch = useDispatch();
@@ -15,29 +16,25 @@ const InvitedEvents = (props) => {
   );
   console.log("shown", shownEvents);
   return (
-    <div className="w-100 p-3 mb-3">
-      <h3>Events you have been invited to</h3>
-
+    <Box sx={{ p: 4 }}>
       {shownEvents ? (
-        <div className="content-box">
+        <>
           {shownEvents.map((event) => {
             if (!event.confirmedUsers.length > 0) {
               return (
-                <div className="card mb-3 content-box" key={event._id}>
-                  <div className="card-container">
-                    <InvitedEventInfo event={event} />
-                  </div>
-                </div>
+                <Card key={event._id} sx={{ m: 1 }}>
+                  <InvitedEventInfo event={event} />
+                </Card>
               );
-            }
+            } else return null;
           })}
-        </div>
+        </>
       ) : (
-        <div className="content-box">
-          <h4>No Events Scheduled Yet</h4>
-        </div>
+        <Card>
+          <Typography variant="h4">No Events Scheduled Yet</Typography>
+        </Card>
       )}
-    </div>
+    </Box>
   );
 };
 

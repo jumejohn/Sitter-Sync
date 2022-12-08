@@ -1,7 +1,15 @@
-import { Box, Typography, Paper, Card } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  Card,
+  TextField,
+  ListItem,
+  Modal,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Modal from "react-modal";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "../actions/deleteUser";
 import { editUser } from "../actions/editUser";
@@ -36,143 +44,180 @@ const MyAccount = (props) => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      sx={{ bgcolor: "Grey", height: "fit-content" }}
+      sx={{ bgcolor: "Grey" }}
     >
       <Paper
         sx={{
           display: "flex",
           flexDirection: "column",
           width: "80%",
+          m: 2,
         }}
       >
         {edit ? (
-          <Box>
-            <div>
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
+          <Box sx={{ m: 1, mb: 8 }}>
+            <Typography variant="h4">Update Your Account Details</Typography>
+            <Card sx={{ p: 2 }}>
+              <TextField
                 type="email"
-                className="form-control form-input"
+                margin="normal"
+                fullWidth
+                label="Email"
                 id="email"
                 defaultValue={user.email}
                 {...register("email")}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">
-                Username
-              </label>
-              <input
+            </Card>
+            <Card sx={{ p: 2 }}>
+              <TextField
                 type="username"
-                className="form-control form-input"
+                margin="normal"
+                fullWidth
+                label="Username"
                 id="username"
                 defaultValue={user.username}
                 {...register("username")}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="firstname" className="form-label">
-                First Name
-              </label>
-              <input
+            </Card>
+            <Card sx={{ p: 2 }}>
+              <TextField
                 type="firstname"
-                className="form-control form-input"
+                margin="normal"
+                fullWidth
+                label="First Name"
                 id="firstname"
                 defaultValue={user.firstname}
                 {...register("firstname")}
               />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="lastname" className="form-label">
-                Last Name
-              </label>
-              <input
+            </Card>
+            <Card sx={{ p: 2 }}>
+              <TextField
                 type="lastname"
-                className="form-control form-input"
+                margin="normal"
+                fullWidth
+                label="Last Name"
                 id="lastname"
                 defaultValue={user.lastname}
                 {...register("lastname")}
               />
-            </div>
-            <div className="mb-3">
-              <input
-                hidden="true"
-                type="password"
-                className="form-control "
-                id="password"
-                defaultValue={user.password}
-                {...register("password")}
-              />
-            </div>
-            <button
-              className="form-button"
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Update Details
-            </button>
-            <button className="form-button" onClick={toggleEdit}>
-              Cancel
-            </button>
+            </Card>
+            <TextField
+              hidden="true"
+              type="password"
+              id="password"
+              defaultValue={user.password}
+              {...register("password")}
+            />
+            <Box sx={{ m: 2 }}>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ m: 1 }}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Update Details
+              </Button>
+              <Button variant="contained" sx={{ m: 1 }} onClick={toggleEdit}>
+                Cancel
+              </Button>
+            </Box>
           </Box>
         ) : (
-          <Box>
-            <Typography variant="h4">All About You</Typography>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Card>
-                <div>Email: {user.email}</div>
-                <div>Username: {user.username}</div>
-                <div>First Name: {user.firstname}</div>
-                <div>Last Name: {user.lastname}</div>
+          <Box sx={{ p: 2, m: 2 }}>
+            <Typography variant="h4" sx={{ mb: 3 }}>
+              All About You
+            </Typography>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Card sx={{ p: 6 }}>
+                <Typography variant="body1">Email: {user.email}</Typography>
+                <Typography variant="body1">
+                  Username: {user.username}
+                </Typography>
+                <Typography variant="body1">
+                  First Name: {user.firstname}
+                </Typography>
+                <Typography variant="body1">
+                  Last Name: {user.lastname}
+                </Typography>
               </Card>
-              <Card>
-                Children:
+              <Card sx={{ p: 6 }}>
+                <Typography variant="h6">Children:</Typography>
                 {user.children.map((child) => (
-                  <li key={child._id} style={{ listStyle: "none" }}>
-                    {child.name}
-                  </li>
+                  <ListItem key={child._id} style={{ listStyle: "none" }}>
+                    <Typography variant="body1">{child.name}</Typography>
+                  </ListItem>
                 ))}
               </Card>
-              <Card>
-                Events:
+              <Card sx={{ p: 6 }}>
+                <Typography variant="h6">Events:</Typography>
                 {user.events.map((event) => (
-                  <li key={event._id} style={{ listStyle: "none" }}>
-                    {event.title}
-                  </li>
+                  <ListItem key={event._id} style={{ listStyle: "none" }}>
+                    <Typography variant="body1">{event.title}</Typography>
+                  </ListItem>
                 ))}
               </Card>
-              <div className="whitespace-container">
-                <button className="form-button" onClick={toggleEdit}>
+              <Card sx={{ p: 6, display: "flex", flexDirection: "column" }}>
+                <Button onClick={toggleEdit} variant="contained" sx={{ m: 1 }}>
                   Edit Account Details
-                </button>
+                </Button>
 
-                <div>
-                  <button className="form-button" onClick={toggleModal}>
-                    Delete Account
-                  </button>
-                </div>
-                <Modal
-                  isOpen={open}
-                  onRequestClose={toggleModal}
-                  contentLabel="Warning"
-                  className={"content-box-centered"}
+                <Button
+                  onClick={toggleModal}
+                  variant="contained"
+                  sx={{ color: "red", m: 1 }}
                 >
-                  <div>
-                    <h3>Are you sure you want to delete your account?</h3>
-                    <h4>
+                  Delete Account
+                </Button>
+
+                <Modal
+                  open={open}
+                  onClose={toggleModal}
+                  contentLabel="Warning"
+                  sx={{ m: 6, overflow: "auto" }}
+                >
+                  <Card sx={{ display: "flex", flexDirection: "column", p: 6 }}>
+                    <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+                      <Button
+                        variant="text"
+                        onClick={toggleModal}
+                        sx={{
+                          color: "black",
+                          fontSize: "larger",
+                          fontWeight: "800",
+                        }}
+                      >
+                        X
+                      </Button>
+                    </Box>
+                    <Typography variant="h3">
+                      Are you sure you want to delete your account?
+                    </Typography>
+                    <Typography variant="h4">
                       This is irreversible and remove all access to your
                       account.
-                    </h4>
-                    <button className="add-new-button" onClick={handleClick}>
-                      Yes
-                    </button>
-                    <button className="add-new-button" onClick={toggleModal}>
-                      No
-                    </button>
-                  </div>
+                    </Typography>
+                    <Box sx={{ m: 1 }}>
+                      <Button
+                        variant="contained"
+                        onClick={handleClick}
+                        sx={{ m: 1 }}
+                      >
+                        Yes
+                      </Button>
+                      <Button variant="contained" onClick={toggleModal}>
+                        No
+                      </Button>
+                    </Box>
+                  </Card>
                 </Modal>
-              </div>
+              </Card>
             </Box>
           </Box>
         )}

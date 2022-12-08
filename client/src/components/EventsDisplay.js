@@ -113,7 +113,7 @@ const EventsDisplay = (props) => {
       justifyContent="center"
       sx={{ bgcolor: "Grey", height: "fit-content" }}
     >
-      <Paper sx={{ m: 1, mb: 8 }}>
+      <Paper sx={{ m: 1, mb: 8, p: 10 }}>
         <Typography variant="h3" sx={{ mt: 2 }}>
           Upcoming Events
         </Typography>
@@ -124,8 +124,8 @@ const EventsDisplay = (props) => {
                 Add New Event
               </Button>
             </Box>
-            <Box>
-              <Card>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <Card sx={{ p: 4, m: 2 }}>
                 <Typography variant="h4" sx={{ pt: 2 }}>
                   Your upcoming events
                 </Typography>
@@ -142,9 +142,9 @@ const EventsDisplay = (props) => {
                 )}
               </Card>
 
-              <Card>
+              <Card sx={{ p: 4, m: 2 }}>
                 <Typography variant="h4" sx={{ pt: 2 }}>
-                  Events Invited To:
+                  Events Invited To
                 </Typography>
 
                 {props.user.events.length > 0 ? (

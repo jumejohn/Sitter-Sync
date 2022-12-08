@@ -196,18 +196,38 @@ const EventInfo = (props) => {
             </Box>
           ) : (
             <Box sx={{ m: 2, mb: 7 }}>
+              <Button
+                onClick={toggleModal}
+                variant="text"
+                size="large"
+                sx={{
+                  m: 2,
+                  p: 2,
+                  position: "absolute",
+
+                  right: "1em",
+                  top: "1em",
+                  color: "black",
+                  fontSize: "larger",
+                }}
+              >
+                X
+              </Button>
               <Card
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  m: 1,
                 }}
               >
                 <Typography variant="h2">{event.title} </Typography>
-                <Typography variant="body1">
+
+                <Typography variant="h5">
                   {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
                   {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
                 </Typography>
+                <Typography variant="h5">Details:</Typography>
                 <Typography variant="body1">{event.description}</Typography>
 
                 <Typography
@@ -218,7 +238,15 @@ const EventInfo = (props) => {
                   {event.confirmedUsers.length > 0 ? "Confirmed" : null}
                 </Typography>
               </Card>
-              <Card sx={{ m: 1 }}>
+              <Card
+                sx={{
+                  m: 1,
+                  p: 2,
+                }}
+              >
+                <Typography align="center" variant="h4">
+                  Children:
+                </Typography>
                 {event.children.map((child) => (
                   <Card
                     key={child._id}
@@ -232,7 +260,7 @@ const EventInfo = (props) => {
                   >
                     <Typography variant="h5">{child.name}</Typography>
                     <Typography variant="body1">Age: {child.age}</Typography>
-                    <Typography variant="body1">
+                    <Typography variant="h6">
                       Things to know about me:
                     </Typography>
                     <Typography variant="body1">{child.childFacts}</Typography>
@@ -243,7 +271,7 @@ const EventInfo = (props) => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
+                  justifyContent: "center",
                   alignItems: "center",
                 }}
               >
