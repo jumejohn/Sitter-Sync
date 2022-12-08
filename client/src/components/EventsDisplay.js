@@ -5,7 +5,16 @@ import ApiCalendar from "react-google-calendar-api";
 import PendingEvents from "./PendingEvents";
 import { addEvent } from "../actions/AddEvent";
 import InvitedEvents from "./InvitedEvents";
-import { Box, Button, Card, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  Checkbox,
+  InputLabel,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -98,41 +107,64 @@ const EventsDisplay = (props) => {
     }
   };
   return (
-    <Paper>
-      <Typography variant="h4" sx={{ mt: 2 }}>
-        Upcoming Events
-      </Typography>
-      {!createEvent ? (
-        <Paper>
-          <Box sx={{ m: 2 }}>
-            <Button onClick={handleCreateToggle} variant="contained">
-              Add New Event
-            </Button>
-          </Box>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ bgcolor: "Grey", height: "fit-content" }}
+    >
+      <Paper sx={{ m: 1, mb: 8 }}>
+        <Typography variant="h3" sx={{ mt: 2 }}>
+          Upcoming Events
+        </Typography>
+        {!createEvent ? (
           <Box>
-            <Card>
-              {props.user.events.length > 0 ? (
-                <>
-                  <ul>
-                    <PendingEvents user={props.user} />
-                  </ul>
-                </>
-              ) : (
-                <div>
-                  <h4>No Events Scheduled Yet</h4>
-                </div>
-              )}
-            </Card>
+            <Box sx={{ m: 2 }}>
+              <Button onClick={handleCreateToggle} variant="contained">
+                Add New Event
+              </Button>
+            </Box>
+            <Box>
+              <Card>
+                <Typography variant="h4" sx={{ pt: 2 }}>
+                  Your upcoming events
+                </Typography>
+                {props.user.events.length > 0 ? (
+                  <PendingEvents user={props.user} />
+                ) : (
+                  <Box sx={{ m: 2, p: 2 }}>
+                    <Card sx={{ p: 2 }}>
+                      <Typography variant="h5">
+                        No Events Scheduled Yet
+                      </Typography>
+                    </Card>
+                  </Box>
+                )}
+              </Card>
 
-            <div className="container mb-3">
-              <InvitedEvents user={props.user} />
-            </div>
+              <Card>
+                <Typography variant="h4" sx={{ pt: 2 }}>
+                  Events Invited To:
+                </Typography>
+
+                {props.user.events.length > 0 ? (
+                  <InvitedEvents user={props.user} />
+                ) : (
+                  <Box sx={{ m: 2, p: 2 }}>
+                    <Card sx={{ p: 2 }}>
+                      <Typography variant="h5">
+                        No Events Scheduled Yet
+                      </Typography>
+                    </Card>
+                  </Box>
+                )}
+              </Card>
+            </Box>
           </Box>
-        </Paper>
-      ) : (
-        <div className="whitespace-container mb-3">
-          <div className="content-box">
-            {/* <div className="mb-3">
+        ) : (
+          <Box>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              {/* <div className="mb-3">
               <p>Do you want to add this event to your Google Calendar?</p>
               <p>
                 Still in testing, needs to be cleard by google, so this won't
@@ -146,109 +178,106 @@ const EventsDisplay = (props) => {
               </button>
               <hr />
             </div> */}
-            <div>
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  className="form-control form-input"
-                  id="title"
-                  placeholder=" Event Title"
-                  {...register("title")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="description" className="form-label">
-                  Special Instructions
-                </label>
-                <textarea
-                  type="text area"
-                  className="form-control form-input"
-                  id="description"
-                  placeholder="Bed at 8, feed dog at 6..."
-                  {...register("description")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="startDate" className="form-label">
-                  Start Date
-                </label>
-                <input
-                  type="dateTime-local"
-                  className="form-control form-input"
-                  id="startDate"
-                  {...register("startDate")}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="endDate" className="form-label">
-                  End Date
-                </label>
-                <input
-                  type="dateTime-local"
-                  className="form-control form-input"
-                  id="endDate"
-                  {...register("endDate")}
-                />
-              </div>
-              <div>
-                {props.user.children.map((child) => {
-                  return (
-                    <div className="form-check" key={child._id}>
-                      <input
-                        className="form-check-input form-input"
-                        type="checkbox"
-                        value={child._id}
-                        id="flexCheckDefault"
-                        onChange={handleChange}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="flexCheckDefault"
-                      >
-                        {child.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
+              <Box sx={{ width: "20em", m: 2, mb: 7 }}>
+                <Card sx={{ p: 1, m: 1 }}>
+                  <TextField
+                    variant="standard"
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    id="title"
+                    placeholder=" Event Title"
+                    {...register("title")}
+                  />
+                </Card>
 
-              <div className="mb-3">
-                <label htmlFor="invitedUsers" className="form-label">
-                  Invite Sitter Email Address
-                </label>
-                <input
-                  type="email"
-                  className="form-control form-input"
-                  id="invitedUsers"
-                  placeholder="Invite Sitter Email Address"
-                  {...register("invitedUsers")}
-                />
-              </div>
-              <Box>
-                <Button
-                  variant="contained"
-                  onClick={handleSubmit(onSubmit)}
-                  className="form-button"
-                  sx={{ m: 1 }}
-                >
-                  Submit
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleCreateToggle}
-                  className="form-button"
-                >
-                  Cancel
-                </Button>
+                <Card sx={{ p: 1, m: 1 }}>
+                  <TextField
+                    variant="standard"
+                    fullWidth="true"
+                    multiline="true"
+                    minRows="3"
+                    type="text area"
+                    margin="normal"
+                    id="description"
+                    placeholder="Bed at 8, feed dog at 6..."
+                    {...register("description")}
+                  />
+                </Card>
+
+                <Card sx={{ p: 1, m: 1 }}>
+                  <TextField
+                    type="dateTime-local"
+                    variant="standard"
+                    fullWidth
+                    margin="normal"
+                    id="startDate"
+                    {...register("startDate")}
+                  />
+                </Card>
+                <Card sx={{ p: 1, m: 1 }}>
+                  <TextField
+                    type="dateTime-local"
+                    variant="standard"
+                    fullWidth
+                    margin="normal"
+                    id="endDate"
+                    {...register("endDate")}
+                  />
+                </Card>
+
+                <Card sx={{ p: 1, m: 1 }}>
+                  {props.user.children.map((child) => {
+                    return (
+                      <Box
+                        key={child._id}
+                        sx={{ display: "flex", flexDirection: "row", m: 2 }}
+                      >
+                        <Checkbox
+                          className="form-check-input form-input"
+                          type="checkbox"
+                          value={child._id}
+                          margin="normal"
+                          color="default"
+                          id="flexCheckDefault"
+                          onChange={handleChange}
+                        />
+                        <InputLabel htmlFor="flexCheckDefault" sx={{ ml: 1 }}>
+                          {child.name}
+                        </InputLabel>
+                      </Box>
+                    );
+                  })}
+                </Card>
+                <Card sx={{ p: 1, m: 1 }}>
+                  <TextField
+                    variant="standard"
+                    margin="normal"
+                    type="email"
+                    fullWidth
+                    id="invitedUsers"
+                    placeholder="Invite Sitter Email Address"
+                    {...register("invitedUsers")}
+                  />
+                </Card>
+                <Box>
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmit(onSubmit)}
+                    sx={{ m: 1 }}
+                  >
+                    Submit
+                  </Button>
+                  <Button variant="contained" onClick={handleCreateToggle}>
+                    Cancel
+                  </Button>
+                </Box>
               </Box>
-            </div>
-          </div>
-        </div>
-      )}
-    </Paper>
+            </Box>
+          </Box>
+        )}
+      </Paper>
+    </Box>
   );
 };
 export default EventsDisplay;

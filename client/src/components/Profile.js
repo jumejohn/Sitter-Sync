@@ -7,12 +7,16 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Outlet, Link } from "react-router-dom";
 
 const Profile = (props) => {
   const user = props.user;
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   if (!user) {
     return (
       <Paper>

@@ -13,7 +13,6 @@ const MyTheme = createTheme({
   typography: {
     fontFamily: ["Archivo Narrow", "sans-serif"].join(","),
   },
-
   palette: {
     primary: {
       main: grey[100],
