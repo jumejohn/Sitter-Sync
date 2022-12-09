@@ -16,7 +16,7 @@ const InvitedEvents = (props) => {
   );
   console.log("shown", shownEvents);
   return (
-    <Box sx={{ p: 4 }}>
+    <Box>
       {shownEvents ? (
         <>
           {shownEvents.map((event) => {
