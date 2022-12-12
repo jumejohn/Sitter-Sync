@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { editChild } from "../actions/EditChild";
 import { deleteChild } from "../actions/deleteChild";
 import {
@@ -11,11 +11,19 @@ import {
   Paper,
   CardMedia,
   Button,
+  InputBase,
+  Input,
+  InputLabel,
+  Card,
 } from "@mui/material";
 
 const ChildInfo = (props) => {
   const child = props.child;
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "childFacts",
+  });
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -73,21 +81,46 @@ const ChildInfo = (props) => {
                   defaultValue={child.age}
                   {...register("age")}
                 />
-
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  margin="normal"
-                  type="text"
-                  id="childFacts"
-                  multiline="true"
-                  minRows="3"
-                  label="Things you should know about me"
-                  defaultValue={child.childFacts}
-                  {...register("childFacts")}
-                />
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  {fields.map((field, index) => {
+                    return (
+                      <>
+                        <TextField
+                          label="Things You Should Know About Me:"
+                          key={field.id}
+                          margin="none"
+                          type="text"
+                          multiline="true"
+                          rows="2"
+                          id="childFacts"
+                          placeholder="Likes to smile, takes meds, etc..."
+                          {...register(`childFacts.${index}.value`)}
+                        />
+                        <Button
+                          sx={{
+                            mb: 2,
+                            width: "25%",
+                          }}
+                          size="small"
+                          variant="contained"
+                          onClick={() => remove(index)}
+                        >
+                          Remove
+                        </Button>
+                      </>
+                    );
+                  })}
+                </Box>
 
                 <Box sx={{ mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    onClick={() => append()}
+                    sx={{ maxWidth: "50%", alignSelf: "center" }}
+                  >
+                    Add Facts About Me
+                  </Button>
+
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
@@ -136,9 +169,14 @@ const ChildInfo = (props) => {
                       Notes about me:
                     </Typography>
 
-                    <Typography variant="h5" sx={{ p: 2 }}>
-                      {child.childFacts}
-                    </Typography>
+                    {child.childFacts.map((fact) => {
+                      console.log(fact);
+                      return (
+                        <Typography variant="h5" sx={{ p: 2 }}>
+                          {fact.value}
+                        </Typography>
+                      );
+                    })}
                   </Box>
                   <Box>
                     <Button

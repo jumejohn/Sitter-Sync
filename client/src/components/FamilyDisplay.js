@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { addChildren } from "../actions/AddChild";
 import ChildrenDisplay from "./ChildrenDisplay";
 import {
@@ -15,12 +15,17 @@ import {
 import { grey } from "@mui/material/colors";
 
 const FamilyDisplay = (props) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "childFacts",
+  });
   const dispatch = useDispatch();
   const [createFam, setCreateFam] = useState(false);
   //   const family = useSelector((state) => state.rootReducer.family);
   const handleCreateToggle = () => setCreateFam(!createFam);
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(addChildren(data));
     reset();
     setCreateFam(!createFam);
@@ -58,17 +63,42 @@ const FamilyDisplay = (props) => {
                   placeholder="Age"
                   {...register("age")}
                 />
+                {fields.map((field, index) => {
+                  return (
+                    <>
+                      <TextField
+                        label="Things You Should Know About Me:"
+                        key={field.id}
+                        margin="normal"
+                        type="text"
+                        multiline="true"
+                        rows="2"
+                        id="childFacts"
+                        placeholder="Likes to smile, takes meds, etc..."
+                        {...register(`childFacts.${index}.value`)}
+                      />
+                      <Button
+                        sx={{
+                          mb: 2,
+                          width: "25%",
+                        }}
+                        size="small"
+                        variant="contained"
+                        onClick={() => remove(index)}
+                      >
+                        Remove
+                      </Button>
+                    </>
+                  );
+                })}
 
-                <TextField
-                  label="Things You Should Know About Me:"
-                  margin="normal"
-                  type="text"
-                  multiline="true"
-                  rows="6"
-                  id="childFacts"
-                  placeholder="Likes to smile, takes meds, etc..."
-                  {...register("childFacts")}
-                />
+                <Button
+                  variant="contained"
+                  onClick={() => append()}
+                  sx={{ maxWidth: "50%", alignSelf: "center" }}
+                >
+                  Add Facts About Me
+                </Button>
 
                 <Button
                   variant="contained"
