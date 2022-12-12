@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
   title: { type: String /* require: true */ },
-  description: { type: String /* required: true */ },
+  description: [{ value: "", done: Boolean }],
   startDate: { type: Date /* required: true */ },
   endDate: { type: Date /* required: true  */ },
   owner: { type: Schema.Types.ObjectId, ref: "User" },

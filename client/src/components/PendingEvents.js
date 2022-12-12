@@ -1,4 +1,4 @@
-import { Card, CardHeader, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import React from "react";
 import EventInfo from "./EventInfo";
 import { Box } from "@mui/material";

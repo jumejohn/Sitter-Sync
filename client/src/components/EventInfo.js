@@ -12,11 +12,16 @@ import {
 } from "@mui/material";
 import { deleteEvent } from "../actions/deleteEvent";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { editEvent } from "../actions/editEvent";
+import { editTask } from "../actions/editTask";
 
 const EventInfo = (props) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "description",
+  });
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const event = props.event;
@@ -47,6 +52,10 @@ const EventInfo = (props) => {
     dispatch(editEvent(data, event._id));
     reset();
     toggleEdit();
+  };
+
+  const markDone = (e) => {
+    dispatch(editTask(e, event._id));
   };
 
   return (
@@ -85,21 +94,6 @@ const EventInfo = (props) => {
                 flexDirection: "column",
               }}
             >
-              {/* <div className="mb-3">
-              <p>Do you want to add this event to your Google Calendar?</p>
-              <p>
-                Still in testing, needs to be cleard by google, so this won't
-                work for you yet...
-              </p>
-              <button
-                onClick={(e) => handleItemClick(e, "sign-in")}
-                className="google-button"
-              >
-                Yes
-              </button>
-              <hr />
-            </div> */}
-
               <Card sx={{ p: 1, m: 1 }}>
                 <TextField
                   variant="standard"
@@ -112,18 +106,46 @@ const EventInfo = (props) => {
                 />
               </Card>
 
-              <Card sx={{ p: 1, m: 1 }}>
-                <TextField
-                  variant="standard"
-                  fullWidth="true"
-                  multiline="true"
-                  minRows="3"
-                  type="text area"
-                  margin="normal"
-                  id="description"
-                  placeholder="Bed at 8, feed dog at 6..."
-                  {...register("description")}
-                />
+              <Card
+                sx={{ p: 1, m: 1, display: "flex", flexDirection: "column" }}
+              >
+                {fields.map((field, index) => {
+                  return (
+                    <>
+                      <TextField
+                        variant="standard"
+                        fullWidth
+                        multiline="true"
+                        minRows="3"
+                        type="text area"
+                        margin="normal"
+                        id="description"
+                        placeholder="Bed at 8, feed dog at 6..."
+                        {...register(`description.${index}.value`)}
+                      />
+
+                      <Button
+                        sx={{
+                          mb: 2,
+                          width: "25%",
+                        }}
+                        size="small"
+                        variant="contained"
+                        onClick={() => remove(index)}
+                      >
+                        Remove
+                      </Button>
+                    </>
+                  );
+                })}
+
+                <Button
+                  variant="contained"
+                  onClick={() => append()}
+                  sx={{ maxWidth: "50%", alignSelf: "center" }}
+                >
+                  Add Details or Tasks
+                </Button>
               </Card>
 
               <Card sx={{ p: 1, m: 1 }}>
@@ -228,7 +250,23 @@ const EventInfo = (props) => {
                   {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
                 </Typography>
                 <Typography variant="h5">Details:</Typography>
-                <Typography variant="body1">{event.description}</Typography>
+                {event.description.map((task) => {
+                  return (
+                    <>
+                      {task.done ? (
+                        <Typography
+                          variant="body1"
+                          sx={{ textDecoration: "line-through" }}
+                        >
+                          {task.value}
+                        </Typography>
+                      ) : (
+                        <Typography variant="body1">{task.value}</Typography>
+                      )}
+                      <Checkbox onChange={(e) => markDone(e.target)}></Checkbox>
+                    </>
+                  );
+                })}
 
                 <Typography
                   variant="h5"
@@ -263,7 +301,16 @@ const EventInfo = (props) => {
                     <Typography variant="h6">
                       Things to know about me:
                     </Typography>
-                    <Typography variant="body1">{child.childFacts}</Typography>
+                    <Typography variant="body1">
+                      {child.childFacts.map((fact) => {
+                        console.log(fact);
+                        return (
+                          <Typography variant="h5" sx={{ p: 2 }}>
+                            {fact.value}
+                          </Typography>
+                        );
+                      })}
+                    </Typography>
                   </Card>
                 ))}
               </Card>
