@@ -9,6 +9,7 @@ import {
   Checkbox,
   Button,
   InputLabel,
+  ToggleButton,
 } from "@mui/material";
 import { deleteEvent } from "../actions/deleteEvent";
 import { useDispatch } from "react-redux";
@@ -55,7 +56,7 @@ const EventInfo = (props) => {
   };
 
   const markDone = (e) => {
-    dispatch(editTask(e, event._id));
+    dispatch(editTask(e.value, event._id));
   };
 
   return (
@@ -250,23 +251,73 @@ const EventInfo = (props) => {
                   {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
                 </Typography>
                 <Typography variant="h5">Details:</Typography>
-                {event.description.map((task) => {
-                  return (
-                    <>
-                      {task.done ? (
-                        <Typography
-                          variant="body1"
-                          sx={{ textDecoration: "line-through" }}
-                        >
-                          {task.value}
-                        </Typography>
-                      ) : (
-                        <Typography variant="body1">{task.value}</Typography>
-                      )}
-                      <Checkbox onChange={(e) => markDone(e.target)}></Checkbox>
-                    </>
-                  );
-                })}
+                <Box
+                  sx={{
+                    backgroundColor: "lightblue",
+                    border: "black 1px solid",
+                  }}
+                >
+                  {event.description.map((task, index) => {
+                    return (
+                      <>
+                        {task.done === true ? (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              m: 2,
+                              border: "1px black solid",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Typography
+                              variant="h5"
+                              sx={{ m: 2, textDecoration: "line-through" }}
+                            >
+                              {task.value}
+                            </Typography>
+                            <Button
+                              value={task._id}
+                              size="small"
+                              variant="contained"
+                              onClick={(e) => markDone(e.target)}
+                              sx={{
+                                width: "1rem",
+                                backgroundColor: "lightgray",
+                              }}
+                            >
+                              Not Done
+                            </Button>
+                          </Box>
+                        ) : (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              m: 2,
+
+                              justifyContent: "space-between",
+                              border: "1px black solid",
+                            }}
+                          >
+                            <Typography variant="h5" sx={{ m: 2 }}>
+                              {task.value}
+                            </Typography>{" "}
+                            <Button
+                              value={task._id}
+                              size="small"
+                              variant="contained"
+                              onClick={(e) => markDone(e.target)}
+                              sx={{ width: "1rem" }}
+                            >
+                              Done
+                            </Button>
+                          </Box>
+                        )}
+                      </>
+                    );
+                  })}
+                </Box>
 
                 <Typography
                   variant="h5"

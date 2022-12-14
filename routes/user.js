@@ -237,9 +237,13 @@ router.post("/:userId/event", requireAuth, async function (req, res, next) {
     invitedUsers,
   } = req.body;
 
+  const newDescription = description.map((task) => {
+    return { value: task.value, done: false };
+  });
+
   new Event({
     title,
-    description,
+    description: newDescription,
     startDate,
     endDate,
     children,
@@ -298,6 +302,32 @@ router.put("/editevent/:eventId", requireAuth, async function (req, res, next) {
       }
     }
   );
+});
+router.put("/edittask/:taskId", async function (req, res, next) {
+  const taskId = req.params.taskId;
+  const { eventId } = req.body;
+  console.log(req.body);
+  Event.findById(eventId)
+    .then((event) => {
+      const task = event.description.id(taskId);
+      if (task.done === true) {
+        task.set("done", false);
+      } else {
+        task.set("done", true);
+      }
+      return event.save();
+    })
+    .then(async (doc, err) => {
+      if (doc) {
+        console.log(doc);
+        res.status(204).json(doc);
+        res.end();
+      } else {
+        console.log(err);
+        res.status(400).send(err);
+        return next(err);
+      }
+    });
 });
 
 router.delete("/event/:eventId", requireAuth, async function (req, res, next) {
