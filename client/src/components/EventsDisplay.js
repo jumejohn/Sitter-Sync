@@ -174,20 +174,20 @@ const EventsDisplay = (props) => {
         ) : (
           <Box sx={{ width: "100%" }}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              {/* <div className="mb-3">
-              <p>Do you want to add this event to your Google Calendar?</p>
-              <p>
-                Still in testing, needs to be cleard by google, so this won't
-                work for you yet...
-              </p>
-              <button
-                onClick={(e) => handleItemClick(e, "sign-in")}
-                className="google-button"
-              >
-                Yes
-              </button>
-              <hr />
-            </div> */}
+              <div className="mb-3">
+                <p>Do you want to add this event to your Google Calendar?</p>
+                <p>
+                  Still in testing, needs to be cleard by google, so this won't
+                  work for you yet...
+                </p>
+                <button
+                  onClick={(e) => handleItemClick(e, "sign-in")}
+                  className="google-button"
+                >
+                  Yes
+                </button>
+                <hr />
+              </div>
               <Box sx={{ width: "100%", m: 2, mb: 7 }}>
                 <Card sx={{ p: 1, m: 1 }}>
                   <TextField

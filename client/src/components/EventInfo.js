@@ -102,6 +102,7 @@ const EventInfo = (props) => {
                   type="text"
                   margin="normal"
                   id="title"
+                  defaultValue={event.title}
                   placeholder=" Event Title"
                   {...register("title")}
                 />
@@ -155,6 +156,7 @@ const EventInfo = (props) => {
                   variant="standard"
                   fullWidth
                   margin="normal"
+                  defaultValue={event.startDate}
                   id="startDate"
                   {...register("startDate")}
                 />
@@ -166,6 +168,7 @@ const EventInfo = (props) => {
                   fullWidth
                   margin="normal"
                   id="endDate"
+                  defaultValue={event.endDate}
                   {...register("endDate")}
                 />
               </Card>
@@ -200,6 +203,7 @@ const EventInfo = (props) => {
                   type="email"
                   fullWidth
                   id="invitedUsers"
+                  defaultValue={event.invitedUsers}
                   placeholder="Invite Sitter Email Address"
                   {...register("invitedUsers")}
                 />
