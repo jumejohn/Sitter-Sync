@@ -9,12 +9,12 @@ const InvitedEvents = (props) => {
 
   useEffect(() => {
     dispatch(getInvitedEvents(props.user.email));
+    console.log("shown", shownEvents);
   }, []);
 
   const shownEvents = useSelector(
     (state) => state.rootReducer.events.invitedEvents || null
   );
-  console.log("shown", shownEvents);
   return (
     <Box>
       {shownEvents ? (

@@ -261,7 +261,7 @@ const EventInfo = (props) => {
                     border: "black 1px solid",
                   }}
                 >
-                  {event.description.map((task, index) => {
+                  {event.description.map((task) => {
                     return (
                       <>
                         {task.done === true ? (
@@ -356,7 +356,7 @@ const EventInfo = (props) => {
                     <Typography variant="h6">
                       Things to know about me:
                     </Typography>
-                    <Typography variant="body1">
+
                       {child.childFacts.map((fact) => {
                         console.log(fact);
                         return (
@@ -365,7 +365,7 @@ const EventInfo = (props) => {
                           </Typography>
                         );
                       })}
-                    </Typography>
+
                   </Card>
                 ))}
               </Card>

@@ -32,57 +32,79 @@ const InvitedEventInfo = (props) => {
         sx={{
           p: 4,
           m: 10,
+          overflow: "auto",
         }}
       >
-        <Card sx={{ p: 4, display: "flex", flexDirection: "column" }}>
-          <Typography variant="h2" align="center">
-            {event.title}
-          </Typography>
-          <Typography variant="h5" align="center">
-            {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
-            {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
-          </Typography>
-          <Typography variant="h5" align="center">
-            {event.description}
-          </Typography>
-          <Box>{event.confirmedUsers.length > 0 ? "Confirmed" : null}</Box>
-
-          <Box>
-            {event.children.map((child) => (
-              <Card key={child._id} sx={{ m: 1, p: 2 }}>
-                <Typography variant="h5" align="center">
-                  {child.name}
-                </Typography>
-                <Typography variant="body1" align="center">
-                  Age: {child.age}
-                </Typography>
-                <Typography variant="h6" align="center">
-                  Things to know about me:
-                </Typography>
-                <Typography variant="body1" align="center">
-                  {child.childFacts}
-                </Typography>
-              </Card>
-            ))}
-          </Box>
-
+        <Card sx={{ m: 5, p: 2 }}>
           <Box
             sx={{
+              m: 2,
+              p: 2,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
+              flexDirection: "column",
             }}
           >
-            <Button onClick={toggleModal} variant="contained" sx={{ m: 1 }}>
-              CLOSE
-            </Button>
+            <Typography variant="h2" align="center">
+              {event.title}
+            </Typography>
+            <Typography variant="h5" align="center">
+              {dayjs(event.startDate).format("MMM D, YYYY h:mm A")} -
+              {dayjs(event.endDate).format("MMM D, YYYY h:mm A")}
+            </Typography>
 
-            <Button onClick={handleConfirm} variant="contained" sx={{ m: 1 }}>
-              Confirm Event
-            </Button>
-            {/* <button onClick={handleDecline} className="form-button">
+            {event.description.map((task) => {
+              return (
+                <Typography variant="h5" align="center">
+                  {task.value}
+                </Typography>
+              );
+            })}
+
+            <Box>{event.confirmedUsers.length > 0 ? "Confirmed" : null}</Box>
+
+            <Box>
+              {event.children.map((child) => (
+                <Card key={child._id} sx={{ m: 1, p: 2 }}>
+                  <Typography variant="h5" align="center">
+                    {child.name}
+                  </Typography>
+                  <Typography variant="body1" align="center">
+                    Age: {child.age}
+                  </Typography>
+                  <Typography variant="h6" align="center">
+                    Things to know about me:
+                  </Typography>
+                  {child.childFacts.map((fact) => {
+                    console.log(fact);
+                    return (
+                      <Typography variant="h6" align="center" sx={{ p: 2 }}>
+                        {fact.value}
+                      </Typography>
+                    );
+                  })}
+                </Card>
+              ))}
+            </Box>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button onClick={toggleModal} variant="contained" sx={{ m: 1 }}>
+                CLOSE
+              </Button>
+
+              <Button onClick={handleConfirm} variant="contained" sx={{ m: 1 }}>
+                Confirm Event
+              </Button>
+              {/* <button onClick={handleDecline} className="form-button">
                           Decline Event
                         </button> */}
+            </Box>
           </Box>
         </Card>
       </Modal>
