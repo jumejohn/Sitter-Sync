@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const editChild = (childData, id) => (dispatch) => {
+export const editTask = (id, eventId) => (dispatch) => {
   const userID = localStorage.userID;
   const token = localStorage.token;
-  const childId = id;
-  const url = `/user/editchild/${childId}`;
-  const data = childData;
+  const taskId = id;
+  const url = `/user/edittask/${taskId}`;
+  const data = { eventId };
   const headers = { headers: { Authorization: `Bearer ${token}` } };
   axios
     .put(url, data, headers)

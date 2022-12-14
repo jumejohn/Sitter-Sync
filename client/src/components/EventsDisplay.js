@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import ApiCalendar from "react-google-calendar-api";
 import PendingEvents from "./PendingEvents";
 import { addEvent } from "../actions/AddEvent";
@@ -31,7 +31,11 @@ const config = {
 const apiCalendar = new ApiCalendar(config);
 
 const EventsDisplay = (props) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "description",
+  });
   const dispatch = useDispatch();
 
   //show the create event form or not
@@ -113,7 +117,7 @@ const EventsDisplay = (props) => {
       justifyContent="center"
       sx={{ bgcolor: "Grey", height: "fit-content" }}
     >
-      <Paper sx={{ m: 1, mb: 8, p: 10 }}>
+      <Paper sx={{ m: 1, mb: 8, p: 10, width: "80%" }}>
         <Typography variant="h3" sx={{ mt: 2 }}>
           Upcoming Events
         </Typography>
@@ -124,8 +128,14 @@ const EventsDisplay = (props) => {
                 Add New Event
               </Button>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Card sx={{ p: 4, m: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Card sx={{ p: 4, m: 2, width: "40%" }}>
                 <Typography variant="h4" sx={{ pt: 2 }}>
                   Your upcoming events
                 </Typography>
@@ -142,7 +152,7 @@ const EventsDisplay = (props) => {
                 )}
               </Card>
 
-              <Card sx={{ p: 4, m: 2 }}>
+              <Card sx={{ p: 4, m: 2, width: "40%" }}>
                 <Typography variant="h4" sx={{ pt: 2 }}>
                   Events Invited To
                 </Typography>
@@ -162,7 +172,7 @@ const EventsDisplay = (props) => {
             </Box>
           </Box>
         ) : (
-          <Box>
+          <Box sx={{ width: "100%" }}>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               {/* <div className="mb-3">
               <p>Do you want to add this event to your Google Calendar?</p>
@@ -178,7 +188,7 @@ const EventsDisplay = (props) => {
               </button>
               <hr />
             </div> */}
-              <Box sx={{ width: "20em", m: 2, mb: 7 }}>
+              <Box sx={{ width: "100%", m: 2, mb: 7 }}>
                 <Card sx={{ p: 1, m: 1 }}>
                   <TextField
                     variant="standard"
@@ -191,18 +201,46 @@ const EventsDisplay = (props) => {
                   />
                 </Card>
 
-                <Card sx={{ p: 1, m: 1 }}>
-                  <TextField
-                    variant="standard"
-                    fullWidth="true"
-                    multiline="true"
-                    minRows="3"
-                    type="text area"
-                    margin="normal"
-                    id="description"
-                    placeholder="Bed at 8, feed dog at 6..."
-                    {...register("description")}
-                  />
+                <Card
+                  sx={{ p: 1, m: 1, display: "flex", flexDirection: "column" }}
+                >
+                  {fields.map((field, index) => {
+                    return (
+                      <>
+                        <TextField
+                          variant="standard"
+                          fullWidth="true"
+                          multiline="true"
+                          minRows="3"
+                          type="text area"
+                          margin="normal"
+                          id="description"
+                          placeholder="Bed at 8, feed dog at 6..."
+                          {...register(`description.${index}.value`)}
+                        />
+
+                        <Button
+                          sx={{
+                            mb: 2,
+                            width: "25%",
+                          }}
+                          size="small"
+                          variant="contained"
+                          onClick={() => remove(index)}
+                        >
+                          Remove
+                        </Button>
+                      </>
+                    );
+                  })}
+
+                  <Button
+                    variant="contained"
+                    onClick={() => append()}
+                    sx={{ maxWidth: "50%", alignSelf: "center" }}
+                  >
+                    Add Details or Tasks
+                  </Button>
                 </Card>
 
                 <Card sx={{ p: 1, m: 1 }}>

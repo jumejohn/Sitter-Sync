@@ -11,10 +11,6 @@ import {
   Paper,
   CardMedia,
   Button,
-  InputBase,
-  Input,
-  InputLabel,
-  Card,
 } from "@mui/material";
 
 const ChildInfo = (props) => {
