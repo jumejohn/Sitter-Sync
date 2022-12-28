@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm, useFieldArray } from "react-hook-form";
-import { editChild } from "../actions/EditChild";
 import { deleteChild } from "../actions/deleteChild";
+import ChildForm from "./ChildForm";
 import {
   Typography,
-  TextField,
   Modal,
   Box,
   Paper,
@@ -15,11 +13,7 @@ import {
 
 const ChildInfo = (props) => {
   const child = props.child;
-  const { register, handleSubmit, reset, control } = useForm();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "childFacts",
-  });
+
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -28,12 +22,6 @@ const ChildInfo = (props) => {
   };
   const toggleEdit = () => {
     setEdit(!edit);
-  };
-
-  const onSubmit = (data) => {
-    dispatch(editChild(data, child._id));
-    reset();
-    toggleEdit();
   };
 
   const handleClick = () => {
@@ -54,87 +42,7 @@ const ChildInfo = (props) => {
       >
         <Box>
           {edit ? (
-            <Box sx={{ p: 10, m: 5, border: "none" }}>
-              <Paper sx={{ position: "relative", p: 10, width: "100%" }}>
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  margin="normal"
-                  type="name"
-                  id="name"
-                  label="Name"
-                  defaultValue={child.name}
-                  {...register("name")}
-                />
-
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  margin="normal"
-                  type="age"
-                  id="name"
-                  label="Age:"
-                  defaultValue={child.age}
-                  {...register("age")}
-                />
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  {fields.map((field, index) => {
-                    return (
-                      <>
-                        <TextField
-                          label="Things You Should Know About Me:"
-                          key={field.id}
-                          margin="none"
-                          type="text"
-                          multiline="true"
-                          rows="2"
-                          id="childFacts"
-                          placeholder="Likes to smile, takes meds, etc..."
-                          {...register(`childFacts.${index}.value`)}
-                        />
-                        <Button
-                          sx={{
-                            mb: 2,
-                            width: "25%",
-                          }}
-                          size="small"
-                          variant="contained"
-                          onClick={() => remove(index)}
-                        >
-                          Remove
-                        </Button>
-                      </>
-                    );
-                  })}
-                </Box>
-
-                <Box sx={{ mt: 2 }}>
-                  <Button
-                    variant="contained"
-                    onClick={() => append()}
-                    sx={{ maxWidth: "50%", alignSelf: "center" }}
-                  >
-                    Add Facts About Me
-                  </Button>
-
-                  <Button
-                    onClick={handleSubmit(onSubmit)}
-                    variant="contained"
-                    sx={{ m: 1 }}
-                  >
-                    Submit
-                  </Button>
-
-                  <Button
-                    onClick={toggleEdit}
-                    variant="contained"
-                    sx={{ m: 1 }}
-                  >
-                    Cancel
-                  </Button>
-                </Box>
-              </Paper>
-            </Box>
+            <ChildForm child={child} toggleEdit={toggleEdit} />
           ) : (
             <Box sx={{ display: "flex", m: 5 }}>
               <Paper
@@ -168,7 +76,7 @@ const ChildInfo = (props) => {
                     {child.childFacts.map((fact) => {
                       console.log(fact);
                       return (
-                        <Typography variant="h5" sx={{ p: 2 }}>
+                        <Typography variant="h5" sx={{ p: 2 }} key={fact.value}>
                           {fact.value}
                         </Typography>
                       );
