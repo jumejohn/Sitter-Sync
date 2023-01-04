@@ -3,12 +3,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={3}
-    >
+    <Paper sx={{ position: "static" }} elevation={3}>
       <BottomNavigation
-        position="absolute"
+        position="fixed"
         sx={{ background: "#84d9bf", borderTop: "2px solid black" }}
       >
         <Container>
